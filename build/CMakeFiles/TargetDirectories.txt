@@ -1,0 +1,6 @@
+/home/rstoke/earth/workspace/school/project network_programming/archive/build/CMakeFiles/edit_cache.dir
+/home/rstoke/earth/workspace/school/project network_programming/archive/build/CMakeFiles/rebuild_cache.dir
+/home/rstoke/earth/workspace/school/project network_programming/archive/build/jalon01/CMakeFiles/edit_cache.dir
+/home/rstoke/earth/workspace/school/project network_programming/archive/build/jalon01/CMakeFiles/rebuild_cache.dir
+/home/rstoke/earth/workspace/school/project network_programming/archive/build/jalon01/CMakeFiles/RE216_JALON01_SERVER.dir
+/home/rstoke/earth/workspace/school/project network_programming/archive/build/jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir

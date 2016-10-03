@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rstoke/earth/workspace/school/project network_programming/archive/src/jalon01/client.c
+stdlib.h
+-
+unistd.h
+-
+stdio.h
+-
+string.h
+-
+sys/types.h
+-
+sys/socket.h
+-
+netdb.h
+-
+
