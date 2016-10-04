@@ -46,9 +46,9 @@ int main(int argc, char* argv[]) {
   //Listen
   listen(sockfd, MAX_NUM_QUEUE);
 
+  //Accept Queue
   for (int i=0; i < MAX_CONC_CONNECTIONS; i++)
   {
-    //Accept
     new_sockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &cli_len);
     if (new_sockfd < 0) {
       error("Error: accept");
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
   return EXIT_SUCCESS;
 }
 
-void error(const char *msg)
+void error(const char *msg)   //ATTENTION : program flow exit
 {
     perror(msg);
     exit(EXIT_FAILURE);
@@ -75,7 +75,14 @@ void handle(int sockfd) {
   if (read(sockfd, buffer, 32) < 0) {
     error("Error: read");
   }
-  printf("msg received : %s\n", buffer);
+
+  if (strcmp(buffer, "/quit") == 0) {
+    printf("Connection closed by the client\n");
+    close(sockfd);
+  }
+  else {
+    printf("msg received : %s\n", buffer);
+  }
 
   //Echo
   if (write(sockfd, buffer, 32) < 0) {
