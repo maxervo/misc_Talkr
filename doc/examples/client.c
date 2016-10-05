@@ -50,25 +50,31 @@ int main(int argc, char const *argv[]) {
     perror("Error: connection");
     exit(EXIT_FAILURE);
   }
+  printf("Welcome to the chat !\n");
+  printf("write '\\quit' in order to close this session \n\n");
+  printf("Input msg:\n ");
 
-  printf("Input msg: ");
-  memset(buffer, 0, BUFFER_SIZE);
-  fgets(buffer, 20, stdin);
+  while  (1){
+    printf(">>  ");
+    memset(buffer, 0, BUFFER_SIZE);
+    fgets(buffer, 20, stdin);
 
-  //Write
-  if (write(sockfd, buffer, 20) < 0) {		//maybe encompass it in while security loop, or use send...etc
-    perror("Error: write");
-    exit(EXIT_FAILURE);
+    //Write
+    if (write(sockfd, buffer, 20) < 0) {		//maybe encompass it in while security loop, or use send...etc
+      perror("Error: write");
+      exit(EXIT_FAILURE);
+    }
+    printf("Msg sent: %s\n", buffer);
+
+    //Read echo
+    memset(buffer, 0, BUFFER_SIZE);
+    if (read(sockfd, buffer, 20) < 0) {
+      perror("Error: read echo");
+      exit(EXIT_FAILURE);
+    }
+    printf("Echo received: %s", buffer);
   }
-  printf("Msg sent: %s\n", buffer);
-
-  //Read echo
-  memset(buffer, 0, BUFFER_SIZE);
-  if (read(sockfd, buffer, 20) < 0) {
-    perror("Error: read echo");
-    exit(EXIT_FAILURE);
-  }
-  printf("Echo received: %s\n", buffer);
+  printf("\n");
 
   return 0;
 }
