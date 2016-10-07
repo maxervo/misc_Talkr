@@ -6,19 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/client.c
+/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01/client.c
+stdio.h
+-
 stdlib.h
 -
 unistd.h
 -
-stdio.h
+netdb.h
+-
+netinet/in.h
 -
 string.h
--
-sys/types.h
--
-sys/socket.h
--
-netdb.h
 -
 

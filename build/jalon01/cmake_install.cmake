@@ -1,4 +1,4 @@
-# Install script for directory: /home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01
+# Install script for directory: /home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

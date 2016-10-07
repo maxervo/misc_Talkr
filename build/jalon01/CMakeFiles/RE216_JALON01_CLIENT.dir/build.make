@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/rstoke/earth/workspace/school/project network_programming/project/src"
+CMAKE_SOURCE_DIR = "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/rstoke/earth/workspace/school/project network_programming/project/build"
+CMAKE_BINARY_DIR = "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build"
 
 # Include any dependencies generated for this target.
 include jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/depend.make
@@ -58,17 +58,17 @@ include jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/progress.make
 include jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/flags.make
 
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o: jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/flags.make
-jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o: /home/rstoke/earth/workspace/school/project\ network_programming/project/src/jalon01/client.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o"
-	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01" && /usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o   -c "/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/client.c"
+jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o: /home/rstoke/earth/workspace/school/project\ network_programming/old/vgri/school-chat/src/jalon01/client.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o"
+	cd "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01" && /usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o   -c "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01/client.c"
 
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.i"
-	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01" && /usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/client.c" > CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.i
+	cd "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01" && /usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01/client.c" > CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.i
 
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.s"
-	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01" && /usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/client.c" -o CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.s
+	cd "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01" && /usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01/client.c" -o CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.s
 
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o.requires:
 
@@ -91,8 +91,8 @@ RE216_JALON01_CLIENT_EXTERNAL_OBJECTS =
 jalon01/RE216_JALON01_CLIENT: jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o
 jalon01/RE216_JALON01_CLIENT: jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/build.make
 jalon01/RE216_JALON01_CLIENT: jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable RE216_JALON01_CLIENT"
-	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RE216_JALON01_CLIENT.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable RE216_JALON01_CLIENT"
+	cd "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RE216_JALON01_CLIENT.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/build: jalon01/RE216_JALON01_CLIENT
@@ -104,10 +104,10 @@ jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/requires: jalon01/CMakeFiles/RE216_J
 .PHONY : jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/requires
 
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/clean:
-	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01" && $(CMAKE_COMMAND) -P CMakeFiles/RE216_JALON01_CLIENT.dir/cmake_clean.cmake
+	cd "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01" && $(CMAKE_COMMAND) -P CMakeFiles/RE216_JALON01_CLIENT.dir/cmake_clean.cmake
 .PHONY : jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/clean
 
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/depend:
-	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/rstoke/earth/workspace/school/project network_programming/project/src" "/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01" "/home/rstoke/earth/workspace/school/project network_programming/project/build" "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01" "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src" "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01" "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build" "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01" "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/depend
 
