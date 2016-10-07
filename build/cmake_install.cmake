@@ -1,4 +1,4 @@
-# Install script for directory: /home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src
+# Install script for directory: /home/rstoke/earth/workspace/school/project network_programming/project/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01/cmake_install.cmake")
+  include("/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/rstoke/earth/workspace/school/project network_programming/project/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

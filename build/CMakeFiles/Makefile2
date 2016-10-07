@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src"
+CMAKE_SOURCE_DIR = "/home/rstoke/earth/workspace/school/project network_programming/project/src"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build"
+CMAKE_BINARY_DIR = "/home/rstoke/earth/workspace/school/project network_programming/project/build"
 
 #=============================================================================
 # Directory level rules for directory jalon01
@@ -86,7 +86,7 @@ jalon01/preinstall:
 jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/all:
 	$(MAKE) -f jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/build.make jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/depend
 	$(MAKE) -f jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/build.make jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" --progress-num=3,4 "Built target RE216_JALON01_SERVER"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" --progress-num=3,4 "Built target RE216_JALON01_SERVER"
 .PHONY : jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/all
 
 # Include target in all.
@@ -96,9 +96,9 @@ all: jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/all
 
 # Build rule for subdir invocation for target.
 jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 2
 	$(MAKE) -f CMakeFiles/Makefile2 jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 0
 .PHONY : jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/rule
 
 # Convenience name for target.
@@ -123,7 +123,7 @@ clean: jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/clean
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/all:
 	$(MAKE) -f jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/build.make jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/depend
 	$(MAKE) -f jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/build.make jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" --progress-num=1,2 "Built target RE216_JALON01_CLIENT"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" --progress-num=1,2 "Built target RE216_JALON01_CLIENT"
 .PHONY : jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/all
 
 # Include target in all.
@@ -133,9 +133,9 @@ all: jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/all
 
 # Build rule for subdir invocation for target.
 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 2
 	$(MAKE) -f CMakeFiles/Makefile2 jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 0
 .PHONY : jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir/rule
 
 # Convenience name for target.

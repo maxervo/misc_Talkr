@@ -16,6 +16,9 @@
 
 void error(const char *msg);
 int handle(int sockfd);
+int do_socket();
+void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no);
+void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr);
 
 int main(int argc, char* argv[]) {
   struct sockaddr_in serv_addr, cli_addr;
@@ -31,21 +34,13 @@ int main(int argc, char* argv[]) {
   port_no = atoi(argv[1]);
 
   //Open socket
-  sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);   //Sockets config: Blocking  //Possible to add SO_REUSEADDR with setsockopt() during dev phase testing...etc
-  if (sockfd < 0) {
-    error("Error - socket opening");
-  }
+  sockfd = do_socket();
 
   //Init socket struct
-  memset(&serv_addr, 0, sizeof(serv_addr));
-  serv_addr.sin_family = AF_INET;
-  serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);  //convert to network order  //INADDR_ANY : all interfaces - not just "localhost", multiple network interfaces OK
-  serv_addr.sin_port = htons(port_no);  //convert to network order
+  init_serv_address(&serv_addr, port_no);
 
   //Bind
-  if ( bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr))<0 ) {  //need cast generic
-    error("Error - bind");
-  }
+  do_bind(sockfd, &serv_addr);
 
   //Listen
   listen(sockfd, MAX_NUM_QUEUE);
@@ -103,36 +98,60 @@ int handle(int sockfd) {
     return KEEP_COMMUNICATION;
   }
 
-
-  /* Backup
-
-  //Read
-  int readen=0;
-  do{
-    readen+= read(sockfd, buffer+readen, 20-readen);		//maybe encompass it in while security loop, or use send...etc
-  } while (readen!=20);
-
-  char quit[6]; // \\quit
-  strncpy(quit,buffer,6);
-  buffer[readen+1] = '\0'; // vu sur developpez.com
-
-  if (strcmp(quit,QUIT_MSG) <= 0) {
-    printf("Connection closed by the client\n");
-    close(sockfd);
-    return 0;
-  }
-  else {
-    printf("msg received : %s", buffer);
-  }
-
-  //Echo
-  int sent=0;
-  do{
-    sent+= write(sockfd, buffer+sent, 20-sent);		//maybe encompass it in while security loop, or use send...etc
-  } while (sent!=20);
-
-  printf("Echo sent\n----------------------------\n----------------------------\n");
-  return 1;
-
-  */
 }
+
+int do_socket() {
+  int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);   //Sockets config: Blocking  //Possible to add SO_REUSEADDR with setsockopt() during dev phase testing...etc
+  if (sockfd < 0) {
+    error("Error - socket opening");
+  }
+
+  return sockfd;
+}
+
+void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no) {
+  memset(serv_addr_ptr, 0, sizeof(struct sockaddr_in));  //sizeof(serv_addr)
+  serv_addr_ptr->sin_family = AF_INET;
+  serv_addr_ptr->sin_addr.s_addr = htonl(INADDR_ANY);  //convert to network order  //INADDR_ANY : all interfaces - not just "localhost", multiple network interfaces OK
+  serv_addr_ptr->sin_port = htons(port_no);  //convert to network order
+}
+
+void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr) {
+  if ( bind(sockfd, (struct sockaddr *) serv_addr_ptr, sizeof(struct sockaddr_in))<0 ) {  //need cast generic
+    error("Error - bind");
+  }
+}
+
+
+
+/* Backup
+
+//Read
+int readen=0;
+do{
+  readen+= read(sockfd, buffer+readen, 20-readen);		//maybe encompass it in while security loop, or use send...etc
+} while (readen!=20);
+
+char quit[6]; // \\quit
+strncpy(quit,buffer,6);
+buffer[readen+1] = '\0'; // vu sur developpez.com
+
+if (strcmp(quit,QUIT_MSG) <= 0) {
+  printf("Connection closed by the client\n");
+  close(sockfd);
+  return 0;
+}
+else {
+  printf("msg received : %s", buffer);
+}
+
+//Echo
+int sent=0;
+do{
+  sent+= write(sockfd, buffer+sent, 20-sent);		//maybe encompass it in while security loop, or use send...etc
+} while (sent!=20);
+
+printf("Echo sent\n----------------------------\n----------------------------\n");
+return 1;
+
+*/

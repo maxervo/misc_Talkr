@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01/server.c" "/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build/jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/server.c.o"
+  "/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/server.c" "/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/CMakeFiles/RE216_JALON01_SERVER.dir/server.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

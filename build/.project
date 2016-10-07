@@ -46,7 +46,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build</value>
+					<value>/home/rstoke/earth/workspace/school/project network_programming/project/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
@@ -82,7 +82,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.location</key>
-					<value>/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/build</value>
+					<value>/home/rstoke/earth/workspace/school/project network_programming/project/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
@@ -109,7 +109,7 @@
 		<link>
 			<name>[Source directory]</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src</location>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src</location>
 		</link>
 		<link>
 			<name>[Subprojects]</name>
@@ -119,12 +119,12 @@
 		<link>
 			<name>[Subprojects]/RE216</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src</location>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src</location>
 		</link>
 		<link>
 			<name>[Subprojects]/RE216_JALON01</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01</location>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01</location>
 		</link>
 		<link>
 			<name>[Targets]</name>
@@ -149,7 +149,7 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_SERVER/Source Files/server.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01/server.c</location>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/server.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_SERVER/Header Files</name>
@@ -189,7 +189,7 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_CLIENT/Source Files/client.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/old/vgri/school-chat/src/jalon01/client.c</location>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/client.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_CLIENT/Header Files</name>
