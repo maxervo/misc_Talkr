@@ -8,15 +8,8 @@
 
 #include <string.h>
 
-//Later on: add a common .h
-#define h_addr h_addr_list[0]   /* for backward compatibility */
-#define BUFFER_SIZE 256
-#define QUIT_MSG "/quit\n"
+#include "client.h"
 
-void error(const char *msg);
-int do_socket();
-struct hostent* get_server(const char *host_target);
-void init_serv_address(struct hostent* server, struct sockaddr_in* serv_addr_ptr, int port_no);
 
 int main(int argc, char const *argv[]) {
   int sockfd;
