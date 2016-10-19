@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
   struct sockaddr_in serv_addr, cli_addr;
   int master_sockfd, cli_sock[MAX_NO_CLI];
   int new_sockfd;
-  fd_set read_fds;
+  fd_set read_fds, read_fds_copy; //copy because of select -> clean
   int max_fd;
   int index_available;
 
@@ -57,12 +57,13 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    if(select(max_fd + 1, &read_fds, NULL, NULL, NULL) == -1) {
+    read_fds_copy = read_fds;
+    if(select(max_fd + 1, &read_fds_copy, NULL, NULL, NULL) == -1) {
       error("Error - select");
     }
 
     //New connection
-    if (FD_ISSET(master_sockfd, &read_fds)) {
+    if (FD_ISSET(master_sockfd, &read_fds_copy)) {
       new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
       if (-1!=(index_available = slotfd_available(cli_sock))) {
@@ -82,9 +83,9 @@ int main(int argc, char* argv[]) {
     else {
       int i;
       for (i = 0; i < MAX_NO_CLI; i++) {
-        if (FD_ISSET(cli_sock[i], &read_fds)) {
+        if (FD_ISSET(cli_sock[i], &read_fds_copy)) {
           if (CLOSE_COMMUNICATION==handle(cli_sock[i])) {
-            cli_sock[i]=0;              
+            cli_sock[i]=0;
           }
           //read what he sent, or close connection...etc
         }
@@ -108,4 +109,3 @@ int main(int argc, char* argv[]) {
 
   return EXIT_SUCCESS;
 }
-
