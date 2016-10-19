@@ -66,14 +66,13 @@ int main(int argc, char* argv[]) {
     if (FD_ISSET(master_sockfd, &read_fds_copy)) {
       new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
-      if (-1!=(index_available = slotfd_available(cli_sock))) {
-        printf("Client accepté\n");
+      if ( (index_available = slotfd_available(cli_sock)) != -1 ) {
+        printf("Client accepted\n");
         cli_sock[index_available] = new_sockfd;
         welcome(new_sockfd);
-        //do stuff send stuff welcome
       }
       else {  // no more slots available, limit reached
-        printf("Client refusé\n");
+        printf("Client refused\n");
         refuse(new_sockfd);//send msg error
         close(new_sockfd);
       }
@@ -84,10 +83,9 @@ int main(int argc, char* argv[]) {
       int i;
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_sock[i], &read_fds_copy)) {
-          if (CLOSE_COMMUNICATION==handle(cli_sock[i])) {
+          if ( CLOSE_COMMUNICATION == handle(cli_sock[i]) ) {
             cli_sock[i]=0;
           }
-          //read what he sent, or close connection...etc
         }
       }
     }

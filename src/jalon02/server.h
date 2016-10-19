@@ -46,7 +46,7 @@ int handle(int sockfd) {
     if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
       error("Error - echo emission");
     }
-    printf("Echo sent to [%i]\n----------------------------\n----------------------------\n",sockfd);
+    printf("Echo sent to [%i]\n----------------------------\n----------------------------\n", sockfd);
 
     return KEEP_COMMUNICATION;
   }
