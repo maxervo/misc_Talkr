@@ -10,7 +10,8 @@
 
 int main(int argc, char* argv[]) {
   struct sockaddr_in serv_addr, cli_addr;
-  int master_sockfd, cli_sock[MAX_NO_CLI];
+  int master_sockfd;
+  struct client cli_base[MAX_NO_CLI];
   int new_sockfd;
   fd_set read_fds, read_fds_copy; //copy because of select -> clean
   int max_fd;
@@ -32,10 +33,7 @@ int main(int argc, char* argv[]) {
   do_bind(master_sockfd, &serv_addr);
 
   //Client sockets
-  int i;
-  for(i=0; i < MAX_NO_CLI; i++) {
-    cli_sock[i] = 0;
-  }
+  init_client_base(cli_base);
 
   //Listen
   if(listen(master_sockfd, MAX_NUM_QUEUE) < 0) {
@@ -51,9 +49,9 @@ int main(int argc, char* argv[]) {
     max_fd = master_sockfd;
     int i;
     for (i = 0; i < MAX_NO_CLI; i++) {
-      if (cli_sock[i] > 0) {
-        FD_SET(cli_sock[i], &read_fds);
-        max_fd = (cli_sock[i] > max_fd)? cli_sock[i] : max_fd;
+      if (cli_base[i].fd > 0) {
+        FD_SET(cli_base[i].fd, &read_fds);
+        max_fd = (cli_base[i].fd > max_fd)? cli_base[i].fd : max_fd;
       }
     }
 
@@ -66,9 +64,9 @@ int main(int argc, char* argv[]) {
     if (FD_ISSET(master_sockfd, &read_fds_copy)) {
       new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
-      if ( (index_available = slotfd_available(cli_sock)) != -1 ) {
+      if ( (index_available = slotfd_available(cli_base)) != SLOTFD_UNAVAILABLE ) {
         printf("Client accepted\n");
-        cli_sock[index_available] = new_sockfd;
+        cli_base[index_available].fd = new_sockfd;
         welcome(new_sockfd);
       }
       else {  // no more slots available, limit reached
@@ -82,9 +80,9 @@ int main(int argc, char* argv[]) {
     else {
       int i;
       for (i = 0; i < MAX_NO_CLI; i++) {
-        if (FD_ISSET(cli_sock[i], &read_fds_copy)) {
-          if ( CLOSE_COMMUNICATION == handle(cli_sock[i]) ) {
-            cli_sock[i]=0;
+        if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
+          if ( CLOSE_COMMUNICATION == handle(cli_base[i].fd) ) {
+            cli_base[i].fd=0;
           }
         }
       }

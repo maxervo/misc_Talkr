@@ -2,7 +2,8 @@
 <projectDescription>
 	<name>RE216-Debug@build</name>
 	<comment></comment>
-	<projects></projects>
+	<projects>
+	</projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.make.core.makeBuilder</name>
@@ -30,7 +31,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.command</key>
-					<value>/usr/bin/make</value>
+					<value>/usr/bin/gmake</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.contents</key>
@@ -42,11 +43,11 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.arguments</key>
-					<value>-j4</value>
+					<value>-j8</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>/home/rstoke/earth/workspace/school/project network_programming/project/build</value>
+					<value>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
@@ -82,7 +83,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.location</key>
-					<value>/home/rstoke/earth/workspace/school/project network_programming/project/build</value>
+					<value>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
@@ -90,26 +91,27 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.core.errorOutputParser</key>
-					<value>org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;</value>
+					<value>org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.cdt.make.core.ScannerConfigBuilder</name>
-			<arguments/>
+			<arguments>
+			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.make.core.makeNature</nature>
 		<nature>org.eclipse.cdt.make.core.ScannerConfigNature</nature>
-		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
 	</natures>
 	<linkedResources>
 		<link>
 			<name>[Source directory]</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src</location>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src</location>
 		</link>
 		<link>
 			<name>[Subprojects]</name>
@@ -119,60 +121,20 @@
 		<link>
 			<name>[Subprojects]/RE216</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src</location>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src</location>
 		</link>
 		<link>
 			<name>[Subprojects]/RE216_JALON01</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01</location>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon01</location>
 		</link>
 		<link>
 			<name>[Subprojects]/RE216_JALON02</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02</location>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02</location>
 		</link>
 		<link>
 			<name>[Targets]</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER/Source Files/server.c</name>
-			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/server.c</location>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] RE216_JALON01_SERVER/Object Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -194,7 +156,7 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_CLIENT/Source Files/client.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/client.c</location>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon01/client.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_CLIENT/Header Files</name>
@@ -217,42 +179,42 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER/</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER/</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER/Source Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files/server.c</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER/Source Files/server.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/server.c</location>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon01/server.c</location>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER/Header Files</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER/Header Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER/CMake Rules</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER/CMake Rules</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER/Resources</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER/Resources</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] RE216_JALON02_SERVER/Object Files</name>
+			<name>[Targets]/[exe] RE216_JALON01_SERVER/Object Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -274,7 +236,7 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Source Files/client.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/client.c</location>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/client.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Header Files</name>
@@ -293,6 +255,46 @@
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files/server.c</name>
+			<type>1</type>
+			<location>/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/server.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/Object Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>

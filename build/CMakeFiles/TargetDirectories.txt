@@ -1,10 +1,4 @@
-/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles/edit_cache.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles/rebuild_cache.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/CMakeFiles/edit_cache.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/CMakeFiles/rebuild_cache.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/CMakeFiles/RE216_JALON01_SERVER.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon02/CMakeFiles/edit_cache.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon02/CMakeFiles/RE216_JALON02_SERVER.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon02/CMakeFiles/rebuild_cache.dir
-/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon01/CMakeFiles/RE216_JALON01_CLIENT.dir
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon01/CMakeFiles/RE216_JALON01_SERVER.dir
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon02/CMakeFiles/RE216_JALON02_SERVER.dir

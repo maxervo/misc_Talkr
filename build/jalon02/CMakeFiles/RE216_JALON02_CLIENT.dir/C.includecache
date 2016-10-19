@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/client.c
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/client.c
 stdio.h
 -
 stdlib.h
@@ -20,7 +20,7 @@ netinet/in.h
 string.h
 -
 client.h
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/client.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/client.h
 
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/client.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/client.h
 

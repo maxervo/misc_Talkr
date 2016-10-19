@@ -42,7 +42,8 @@ int main(int argc, char* argv[]) {
   listen(sockfd, MAX_NUM_QUEUE);
 
   //Server Loop : Acceptance Queue
-  for (int i=0; i < MAX_NO_CONNECTIONS; i++) {
+  int i;
+  for (i=0; i < MAX_NO_CONNECTIONS; i++) {
     new_sockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &cli_len);   //Blocked, (Sockets config: Blocking), so only one connection opened at a time
     if (new_sockfd < 0) {
       error("Error - accept");

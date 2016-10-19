@@ -2,19 +2,30 @@
 #define MAX_NO_CLI 2
 #define MAX_NUM_QUEUE 10
 #define BUFFER_SIZE 256
+#define ALIAS_SIZE 25
+#define CON_TIME_SIZE 25
 #define QUIT_MSG "/quit\n"  //Attention newline character captured as well by input
+#define SLOTFD_UNAVAILABLE -1
 
 #define KEEP_COMMUNICATION 1
 #define CLOSE_COMMUNICATION 0
+
+struct client {
+  int fd;
+  char alias[ALIAS_SIZE];
+  char con_time[CON_TIME_SIZE];
+  long ip_addr;  //ATTENTION with inet_aton(), inet_ntoa()
+};
 
 void error(const char *msg);
 int handle(int sockfd);
 int do_socket();
 void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no);
 void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr);
-int slotfd_available(int cli_sock[]);
+int slotfd_available(struct client cli_base[]);
 int welcome(int sockfd);
 int refuse(int sockfd);
+void init_client_base(struct client *cli_base);
 
 void error(const char *msg)   //ATTENTION : program flow exit
 {
@@ -75,17 +86,17 @@ void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr) {
   }
 }
 
-int slotfd_available(int cli_sock[]) {
+int slotfd_available(struct client cli_base[]) {
   int i = 0;
   while(i <= MAX_NO_CLI) {
-    if (cli_sock[i] == 0) {
+    if (cli_base[i].fd == 0) {
       return i;
     }
     else {
       i++;
     }
   }
-  return -1;
+  return SLOTFD_UNAVAILABLE;
 }
 
 int welcome(int sockfd) {
@@ -116,4 +127,8 @@ int refuse(int sockfd) {
   }
   printf("----------------------------\n--New connection refused !--\n----------------------------\n");
   return KEEP_COMMUNICATION;
+}
+
+void init_client_base(struct client *cli_base) {
+  memset(cli_base, 0, MAX_NO_CLI*sizeof(struct client));  //Considered NULL values 0, clean way would be manual init
 }
