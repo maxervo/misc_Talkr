@@ -18,10 +18,10 @@ int main(int argc, char const *argv[]) {
   struct hostent *server;
   char buffer[BUFFER_SIZE];
 
-  printf("-------------------------\n- Welcome to the chat ! -\n-------------------------\n");
+  /*printf("-------------------------\n- Welcome to the chat ! -\n-------------------------\n");
   printf("write '/quit' in order to close this session\n\n");
   printf("Input msg:\n ");
-
+*/
   //Verify arguments
   if (argc < 3) {
     fprintf(stderr,"Program %s needs arguments regarding target server: hostname, port\n", argv[0]);
@@ -39,6 +39,14 @@ int main(int argc, char const *argv[]) {
     error("Error - connection");
   }
 
+  //Receive Echo
+  memset(buffer, 0, BUFFER_SIZE);
+  if (recv(sockfd, buffer, BUFFER_SIZE, 0) > 0) {    //if recv = 0, communication closed by server OK    //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
+    printf("[SERVER]:\n %s\n", buffer);
+    if (strstr(buffer,"Retry again later !")!=NULL){
+      error("Error : connection");
+    }
+  }
   //Client Loop
   while(1) {  //maybe do more elegant way
     printf("\n >>  ");
@@ -103,3 +111,4 @@ void init_serv_address(struct hostent* server, struct sockaddr_in* serv_addr_ptr
   memcpy(server->h_addr, &(serv_addr_ptr->sin_addr.s_addr), server->h_length);  //why can't do assign direct? because of network order endian?, no need htons(ip address) ? TODO
   serv_addr_ptr->sin_port = htons(port_no);  //convert to network order
 }
+

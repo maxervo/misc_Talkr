@@ -1,5 +1,5 @@
 //#define MAX_NO_CONNECTIONS 20
-#define MAX_NO_CLI 20
+#define MAX_NO_CLI 2
 #define MAX_NUM_QUEUE 10
 #define BUFFER_SIZE 256
 #define QUIT_MSG "/quit\n"  //Attention newline character captured as well by input
@@ -13,6 +13,8 @@ int do_socket();
 void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no);
 void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr);
 int slotfd_available(int cli_sock[]);
+int welcome(int sockfd);
+int NoSlotAvailable(int sockfd);
 
 void error(const char *msg)   //ATTENTION : program flow exit
 {
@@ -38,13 +40,13 @@ int handle(int sockfd) {
 
   //Msg
   else {
-    printf("msg received : %s", buffer);
+    printf("[%i]: %s",sockfd, buffer);
 
     //Echo
     if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
       error("Error - echo emission");
     }
-    printf("Echo sent\n----------------------------\n----------------------------\n");
+    printf("Echo sent to [%i]\n----------------------------\n----------------------------\n",sockfd);
 
     return KEEP_COMMUNICATION;
   }
@@ -74,14 +76,45 @@ void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr) {
 }
 
 int slotfd_available(int cli_sock[]) {
-  int i = 0
+  int i = 0;
   while(i <= MAX_NO_CLI) {
     if (cli_sock[i] == 0) {
       return i;
     }
     else {
-      return 0;
+      i++;
     }
-    i++;
   }
+  return -1;
 }
+
+int welcome(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  char * welcome="-------------------------\n- Welcome to the chat ! -\n-------------------------\n write '/quit' in order to close this session\n\n Input msg:\n ";
+
+  strcpy(buffer,welcome);
+
+  if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
+    error("Error - welcome emission");
+  }
+  printf("----------------------------\n------New Connection !------\n----------------------------\n");
+
+  return KEEP_COMMUNICATION;
+}
+
+int NoSlotAvailable(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  char * msg="\n-------------------------\n--  Retry again later ! --\n-------------------------\n (Server cannot accept incoming connections anymore)\n\n";
+
+  strcpy(buffer,msg);
+
+  if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
+    error("Error - welcome emission");
+
+  }
+  printf("----------------------------\n--New connection refused !--\n----------------------------\n");
+  return KEEP_COMMUNICATION;
+}
+

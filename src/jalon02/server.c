@@ -29,15 +29,16 @@ int main(int argc, char* argv[]) {
   //Preparing server
   master_sockfd = do_socket();      //add SO_REUSEADDR
   init_serv_address(&serv_addr, port_no);
-  do_bind(sockfd, &serv_addr);
+  do_bind(master_sockfd, &serv_addr);
 
   //Client sockets
-  for(int i=0; i < MAX_NO_CLI; i++) {
+  int i;
+  for(i=0; i < MAX_NO_CLI; i++) {
     cli_sock[i] = 0;
   }
 
   //Listen
-  if(listen(sockfd, MAX_NUM_QUEUE) < 0) {
+  if(listen(master_sockfd, MAX_NUM_QUEUE) < 0) {
     error("Error - listen");
   }
 
@@ -45,10 +46,11 @@ int main(int argc, char* argv[]) {
   while(1) {
 
     //Workspace fd set preparation
-    FD_ZERO(&read_fds);
-    FD_SET(master_sockfd, &read_fds);
+    FD_ZERO(&read_fds); // mise a zéro
+    FD_SET(master_sockfd, &read_fds); // listen Socket
     max_fd = master_sockfd;
-    for (int i = 0; i < MAX_NO_CLI; i++) {
+    int i;
+    for (i = 0; i < MAX_NO_CLI; i++) {
       if (cli_sock[i] > 0) {
         FD_SET(cli_sock[i], &read_fds);
         max_fd = (cli_sock[i] > max_fd)? cli_sock[i] : max_fd;
@@ -56,27 +58,34 @@ int main(int argc, char* argv[]) {
     }
 
     if(select(max_fd + 1, &read_fds, NULL, NULL, NULL) == -1) {
-      error("Error - select")
+      error("Error - select");
     }
 
     //New connection
     if (FD_ISSET(master_sockfd, &read_fds)) {
-      new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len)
-      if (index_available = slotfd_available(cli_sock)) {
-        cli_sock[index_available] = new_sockfd;
+      new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
+      if (-1!=(index_available = slotfd_available(cli_sock))) {
+        printf("Client accepté\n");
+        cli_sock[index_available] = new_sockfd;
+        welcome(new_sockfd);
         //do stuff send stuff welcome
       }
       else {  // no more slots available, limit reached
-        //send msg error
+        printf("Client refusé\n");
+        NoSlotAvailable(new_sockfd);//send msg error
         close(new_sockfd);
       }
     }
 
     //Already client IO
     else {
-      for (int i = 0; i < MAX_NO_CLI; i++) {
+      int i;
+      for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_sock[i], &read_fds)) {
+          if (CLOSE_COMMUNICATION==handle(cli_sock[i])) {
+            cli_sock[i]=0;              
+          }
           //read what he sent, or close connection...etc
         }
       }
@@ -99,3 +108,4 @@ int main(int argc, char* argv[]) {
 
   return EXIT_SUCCESS;
 }
+
