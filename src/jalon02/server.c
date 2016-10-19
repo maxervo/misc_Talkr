@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
       }
       else {  // no more slots available, limit reached
         printf("Client refusé\n");
-        NoSlotAvailable(new_sockfd);//send msg error
+        refuse(new_sockfd);//send msg error
         close(new_sockfd);
       }
     }
