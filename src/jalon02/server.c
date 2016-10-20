@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
   port_no = atoi(argv[1]);
 
   //Preparing server
-  master_sockfd = do_socket();      //add SO_REUSEADDR
+  master_sockfd = create_socket();      //add SO_REUSEADDR
   init_serv_address(&serv_addr, port_no);
   do_bind(master_sockfd, &serv_addr);
 
@@ -89,20 +89,6 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  /*
-  //Server Loop : Acceptance Queue
-  for (int i=0; i < MAX_NO_CONNECTIONS; i++) {
-    new_sockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &cli_len);   //Blocked, (Sockets config: Blocking), so only one connection opened at a time
-    if (new_sockfd < 0) {
-      error("Error - accept");
-    }
-    while(handle(new_sockfd)){     //while the connection is open
-      //Handling each time
-    }
-    close(new_sockfd);
-  }
-  close(sockfd);*/
-
   return EXIT_SUCCESS;
 }
 
@@ -144,7 +130,7 @@ int handle(int sockfd) {
 
 }
 
-int do_socket() {
+int create_socket() {
   int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);   //Sockets config: Blocking  //Possible to add SO_REUSEADDR with setsockopt() during dev phase testing...etc
   if (sockfd < 0) {
     error("Error - socket opening");

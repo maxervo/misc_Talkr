@@ -19,7 +19,7 @@ struct client {
 
 void error(const char *msg);
 int handle(int sockfd);
-int do_socket();
+int create_socket();
 void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no);
 void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr);
 int slotfd_available(struct client cli_base[]);

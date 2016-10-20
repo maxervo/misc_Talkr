@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
   port_no = atoi(argv[2]);
 
   //Preparing
-  sockfd = do_socket();
+  sockfd = create_socket();
   server = get_server(argv[1]);
   init_serv_address(server, &serv_addr, port_no);
 
@@ -86,7 +86,7 @@ void error(const char *msg)   //ATTENTION : program flow exit
     exit(EXIT_FAILURE);
 }
 
-int do_socket() {
+int create_socket() {
   int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);   //Sockets config: Blocking  //Possible to add SO_REUSEADDR with setsockopt() during dev phase testing...etc
   if (sockfd < 0) {
     error("Error - socket opening");
@@ -111,4 +111,3 @@ void init_serv_address(struct hostent* server, struct sockaddr_in* serv_addr_ptr
   memcpy(server->h_addr, &(serv_addr_ptr->sin_addr.s_addr), server->h_length);  //why can't do assign direct? because of network order endian?, no need htons(ip address) ? TODO
   serv_addr_ptr->sin_port = htons(port_no);  //convert to network order
 }
-
