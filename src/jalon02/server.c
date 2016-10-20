@@ -44,8 +44,8 @@ int main(int argc, char* argv[]) {
   while(1) {
 
     //Workspace fd set preparation
-    FD_ZERO(&read_fds); // mise a zéro
-    FD_SET(master_sockfd, &read_fds); // listen Socket
+    FD_ZERO(&read_fds);
+    FD_SET(master_sockfd, &read_fds); // listen socket
     max_fd = master_sockfd;
     int i;
     for (i = 0; i < MAX_NO_CLI; i++) {
