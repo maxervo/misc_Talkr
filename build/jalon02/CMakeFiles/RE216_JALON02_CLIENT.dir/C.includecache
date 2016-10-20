@@ -19,8 +19,32 @@ netinet/in.h
 -
 string.h
 -
+common.h
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.h
 client.h
 /home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/client.h
 
 /home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/client.h
+
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+sys/types.h
+-
+sys/socket.h
+-
+netdb.h
+-
+netinet/in.h
+-
+common.h
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.h
+
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.h
 

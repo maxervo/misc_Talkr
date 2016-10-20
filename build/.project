@@ -232,6 +232,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files/common.c</name>
+			<type>1</type>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.c</location>
+		</link>
+		<link>
 			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files/server.c</name>
 			<type>1</type>
 			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/server.c</location>
@@ -270,6 +275,11 @@
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Source Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Source Files/common.c</name>
+			<type>1</type>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Source Files/client.c</name>

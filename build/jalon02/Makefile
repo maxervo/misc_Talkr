@@ -167,6 +167,36 @@ client.c.s:
 	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(MAKE) -f jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/build.make jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/client.c.s
 .PHONY : client.c.s
 
+common.o: common.c.o
+
+.PHONY : common.o
+
+# target to build an object file
+common.c.o:
+	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(MAKE) -f jalon02/CMakeFiles/RE216_JALON02_SERVER.dir/build.make jalon02/CMakeFiles/RE216_JALON02_SERVER.dir/common.c.o
+	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(MAKE) -f jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/build.make jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/common.c.o
+.PHONY : common.c.o
+
+common.i: common.c.i
+
+.PHONY : common.i
+
+# target to preprocess a source file
+common.c.i:
+	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(MAKE) -f jalon02/CMakeFiles/RE216_JALON02_SERVER.dir/build.make jalon02/CMakeFiles/RE216_JALON02_SERVER.dir/common.c.i
+	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(MAKE) -f jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/build.make jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/common.c.i
+.PHONY : common.c.i
+
+common.s: common.c.s
+
+.PHONY : common.s
+
+# target to generate assembly for a file
+common.c.s:
+	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(MAKE) -f jalon02/CMakeFiles/RE216_JALON02_SERVER.dir/build.make jalon02/CMakeFiles/RE216_JALON02_SERVER.dir/common.c.s
+	cd "/home/rstoke/earth/workspace/school/project network_programming/project/build" && $(MAKE) -f jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/build.make jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/common.c.s
+.PHONY : common.c.s
+
 server.o: server.c.o
 
 .PHONY : server.o
@@ -207,6 +237,9 @@ help:
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
+	@echo "... common.o"
+	@echo "... common.i"
+	@echo "... common.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"

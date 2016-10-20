@@ -25,11 +25,11 @@ int main(int argc, char const *argv[]) {
   struct hostent *server;
   char buffer[BUFFER_SIZE];
 
-  printf("-------------------------\n- Welcome to the chat ! -\n-------------------------\n");
-  printf("write '/quit' in order to close this session\n\n");
-  printf("Input msg:\n ");
+  printf("-------------------------\n- Talkr Client ! -\n-------------------------\n");
+  printf("Write '/quit' in order to close this session\n\n");
+  printf("Input msg:\n");
 
-  //Verify arguments
+  //Verifying arguments
   if (argc < 3) {
     fprintf(stderr,"Program %s needs arguments regarding target server: hostname, port\n", argv[0]);
     exit(EXIT_FAILURE);

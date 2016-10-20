@@ -6,12 +6,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#include "common.h"
 #include "server.h"
 
 int main(int argc, char* argv[]) {
   struct sockaddr_in serv_addr, cli_addr;
   int master_sockfd;
-  struct client cli_base[MAX_NO_CLI];
+  struct Client cli_base[MAX_NO_CLI];
   int new_sockfd;
   fd_set read_fds, read_fds_copy; //copy because of select -> clean
   int max_fd;
@@ -40,21 +41,22 @@ int main(int argc, char* argv[]) {
     error("Error - listen");
   }
 
-
+  //Main Server Loop
   while(1) {
 
     //Workspace fd set preparation
     FD_ZERO(&read_fds);
-    FD_SET(master_sockfd, &read_fds); // listen socket
+    FD_SET(master_sockfd, &read_fds); //Add listening socket
     max_fd = master_sockfd;
     int i;
-    for (i = 0; i < MAX_NO_CLI; i++) {
-      if (cli_base[i].fd > 0) {
+    for (i = 0; i < MAX_NO_CLI; i++) {  //Add all "already connected" client sockets
+      if (cli_base[i].fd > EMPTY_SLOT) {  //Considering "non-error" slots (thus non negative), and "non-empty" slots
         FD_SET(cli_base[i].fd, &read_fds);
         max_fd = (cli_base[i].fd > max_fd)? cli_base[i].fd : max_fd;
       }
     }
 
+    //Activity monitoring
     read_fds_copy = read_fds;
     if(select(max_fd + 1, &read_fds_copy, NULL, NULL, NULL) == -1) {
       error("Error - select");
@@ -64,25 +66,25 @@ int main(int argc, char* argv[]) {
     if (FD_ISSET(master_sockfd, &read_fds_copy)) {
       new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
-      if ( (index_available = slotfd_available(cli_base)) != SLOTFD_UNAVAILABLE ) {
-        printf("Client accepted\n");
+      if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
+        printf("New connection! Client accepted\n");
         cli_base[index_available].fd = new_sockfd;
         welcome(new_sockfd);
       }
-      else {  // no more slots available, limit reached
-        printf("Client refused\n");
-        refuse(new_sockfd);//send msg error
+      else {  //No more slots available, limit reached
+        printf("New connection! Client refused\n");
+        refuse(new_sockfd);   //Sending error msg
         close(new_sockfd);
       }
     }
 
-    //Already client IO
+    //Client already connected : IO
     else {
       int i;
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
-          if ( CLOSE_COMMUNICATION == handle(cli_base[i].fd) ) {
-            cli_base[i].fd=0;
+          if ( handle(cli_base[i].fd) == CLOSE_COMMUNICATION) {
+            cli_base[i].fd = EMPTY_SLOT;
           }
         }
       }
@@ -90,13 +92,6 @@ int main(int argc, char* argv[]) {
   }
 
   return EXIT_SUCCESS;
-}
-
-
-void error(const char *msg)   //ATTENTION : program flow exit
-{
-    perror(msg);
-    exit(EXIT_FAILURE);
 }
 
 int handle(int sockfd) {
@@ -130,13 +125,8 @@ int handle(int sockfd) {
 
 }
 
-int create_socket() {
-  int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);   //Sockets config: Blocking  //Possible to add SO_REUSEADDR with setsockopt() during dev phase testing...etc
-  if (sockfd < 0) {
-    error("Error - socket opening");
-  }
-
-  return sockfd;
+void init_client_base(struct Client *cli_base) {
+  memset(cli_base, 0, MAX_NO_CLI*sizeof(struct Client));  //Considered NULL values 0, clean way would be manual init
 }
 
 void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no) {
@@ -152,49 +142,40 @@ void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr) {
   }
 }
 
-int slotfd_available(struct client cli_base[]) {
+int slot_available(struct Client cli_base[]) {
   int i = 0;
   while(i <= MAX_NO_CLI) {
-    if (cli_base[i].fd == 0) {
+    if (cli_base[i].fd == EMPTY_SLOT) {
       return i;
     }
     else {
       i++;
     }
   }
-  return SLOTFD_UNAVAILABLE;
+  return SLOT_UNAVAILABLE;
 }
 
-int welcome(int sockfd) {
+void welcome(int sockfd) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
-  char * welcome="-------------------------\n- Welcome to the chat ! -\n-------------------------\n write '/quit' in order to close this session\n\n Input msg:\n ";
+  //char welcome[] = "Welcome! Connection established with the Talkr server";
 
-  strcpy(buffer,welcome);
+  strcpy(buffer, WELCOME_MSG);
 
   if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
     error("Error - welcome emission");
   }
-  printf("----------------------------\n------New Connection !------\n----------------------------\n");
-
-  return KEEP_COMMUNICATION;
 }
 
-int refuse(int sockfd) {
+void refuse(int sockfd) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
-  char * msg="\n-------------------------\n--  Retry again later ! --\n-------------------------\n (Server cannot accept incoming connections anymore)\n\n";
+  //char msg[]="Refused! Server cannot accept anymore incoming connections, retry later...\n";
 
-  strcpy(buffer,msg);
+  strcpy(buffer, REFUSE_MSG);
 
   if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
     error("Error - welcome emission");
 
   }
-  printf("----------------------------\n--New connection refused !--\n----------------------------\n");
-  return KEEP_COMMUNICATION;
-}
-
-void init_client_base(struct client *cli_base) {
-  memset(cli_base, 0, MAX_NO_CLI*sizeof(struct client));  //Considered NULL values 0, clean way would be manual init
 }

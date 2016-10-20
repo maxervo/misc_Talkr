@@ -8,6 +8,7 @@
 
 #include <string.h>
 
+#include "common.h"
 #include "client.h"
 
 
@@ -18,11 +19,10 @@ int main(int argc, char const *argv[]) {
   struct hostent *server;
   char buffer[BUFFER_SIZE];
 
-  /*printf("-------------------------\n- Welcome to the chat ! -\n-------------------------\n");
-  printf("write '/quit' in order to close this session\n\n");
-  printf("Input msg:\n ");
-*/
-  //Verify arguments
+  printf("-------------------------\n- Talkr Client ! -\n-------------------------\n");
+  printf("Write '/quit' in order to close this session\n");
+
+  //Verifying arguments
   if (argc < 3) {
     fprintf(stderr,"Program %s needs arguments regarding target server: hostname, port\n", argv[0]);
     exit(EXIT_FAILURE);
@@ -39,23 +39,24 @@ int main(int argc, char const *argv[]) {
     error("Error - connection");
   }
 
-  //Receive Echo
+  //Receive Welcome
   memset(buffer, 0, BUFFER_SIZE);
   if (recv(sockfd, buffer, BUFFER_SIZE, 0) > 0) {    //if recv = 0, communication closed by server OK    //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-    printf("[SERVER]:\n %s\n", buffer);
-    if (strstr(buffer,"Retry again later !")!=NULL){
-      error("Error : connection");
+    printf("%s\n", buffer);
+    if (strcmp(buffer, REFUSE_MSG) == 0){
+      error("Error - connection");
     }
   }
-  //Client Loop
+
+  //Main Client Loop
   while(1) {  //maybe do more elegant way
-    printf("\n >>  ");
+    printf("Input msg: ");
     memset(buffer, 0, BUFFER_SIZE);
     fgets(buffer, BUFFER_SIZE, stdin);
 
     //Send
     if (send(sockfd, buffer, BUFFER_SIZE, 0) >= 0) {    //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-      printf("Msg sent: %s\n", buffer);
+      printf("Msg sent\n");
     }
     else {
       error("Error - send");
@@ -80,20 +81,6 @@ int main(int argc, char const *argv[]) {
   return EXIT_SUCCESS;  //optional line, indeed client quits the program with "/quit" or ctrl+d
 }
 
-void error(const char *msg)   //ATTENTION : program flow exit
-{
-    perror(msg);
-    exit(EXIT_FAILURE);
-}
-
-int create_socket() {
-  int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);   //Sockets config: Blocking  //Possible to add SO_REUSEADDR with setsockopt() during dev phase testing...etc
-  if (sockfd < 0) {
-    error("Error - socket opening");
-  }
-
-  return sockfd;
-}
 
 struct hostent* get_server(const char *host_target) {
   struct hostent *server = gethostbyname(host_target);	//Later on: use addrinfo (cf. gethostbyname considered deprecated, and for ipv6...etc)
