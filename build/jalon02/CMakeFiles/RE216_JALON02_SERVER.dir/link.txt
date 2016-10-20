@@ -1,1 +1,1 @@
-/usr/bin/cc  -g    CMakeFiles/RE216_JALON02_SERVER.dir/server.c.o  -o RE216_JALON02_SERVER -rdynamic 
+/usr/bin/cc  -g   CMakeFiles/RE216_JALON02_SERVER.dir/server.c.o  -o RE216_JALON02_SERVER -rdynamic 
