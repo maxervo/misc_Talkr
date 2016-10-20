@@ -1,12 +1,10 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#define MAX_NO_CLI 2
+#define MAX_NO_CLI 20
 #define MAX_NUM_QUEUE 10
-#define BUFFER_SIZE 256
 #define ALIAS_SIZE 25
 #define CON_TIME_SIZE 25
-#define QUIT_MSG "/quit\n"  //Attention newline character captured as well by input
 
 #define SLOT_UNAVAILABLE -1
 #define KEEP_COMMUNICATION 1
@@ -22,7 +20,6 @@ struct Client {
 
 void error(const char *msg);
 int handle(int sockfd);
-
 void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no);
 void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr);
 int slot_available(struct Client cli_base[]);

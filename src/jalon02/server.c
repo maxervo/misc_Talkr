@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h>      //Later on, do libevent for asynchronous event based server
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -12,9 +12,9 @@
 int main(int argc, char* argv[]) {
   struct sockaddr_in serv_addr, cli_addr;
   int master_sockfd;
-  struct Client cli_base[MAX_NO_CLI];
+  struct Client cli_base[MAX_NO_CLI];   //array chosen instead of lists because: max size known
   int new_sockfd;
-  fd_set read_fds, read_fds_copy; //copy because of select -> clean
+  fd_set read_fds, read_fds_copy; //copy because of select, to be clean
   int max_fd;
   int index_available;
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
   port_no = atoi(argv[1]);
 
   //Preparing server
-  master_sockfd = create_socket();      //add SO_REUSEADDR
+  master_sockfd = create_socket();
   init_serv_address(&serv_addr, port_no);
   do_bind(master_sockfd, &serv_addr);
 
@@ -67,12 +67,12 @@ int main(int argc, char* argv[]) {
       new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
       if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
-        printf("New connection! Client accepted\n");
+        printf("New connection! Client accepted\n\n");
         cli_base[index_available].fd = new_sockfd;
         welcome(new_sockfd);
       }
       else {  //No more slots available, limit reached
-        printf("New connection! Client refused\n");
+        printf("New connection! Client refused\n\n");
         refuse(new_sockfd);   //Sending error msg
         close(new_sockfd);
       }
@@ -97,28 +97,25 @@ int main(int argc, char* argv[]) {
 int handle(int sockfd) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
-  int readlen = recv(sockfd, buffer, BUFFER_SIZE, 0);     //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
 
-  //Quit
-  if (readlen == 0 || strcmp(buffer,QUIT_MSG) == 0) { //other than quit msg, recv returns 0 when client closes connection as well
-    printf("Connection closed by client\n");
+  //Abrupt close by client
+  if( do_recv(sockfd, buffer, BUFFER_SIZE) == CLOSE_ABRUPT ) {
+    printf("Connection closed abruptly by remote peer\n");
     return CLOSE_COMMUNICATION;
   }
 
-  //Error
-  else if (readlen < 0) {
-    error("Error - reception");
+  //Quit
+  else if(strcmp(buffer,QUIT_MSG) == 0) {
+    printf("Quit msg received : connection closed by client\n");
+    close(sockfd);
+    return CLOSE_COMMUNICATION;
   }
 
   //Msg
   else {
-    printf("[%i]: %s",sockfd, buffer);
-
-    //Echo
-    if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-      error("Error - echo emission");
-    }
-    printf("Echo sent to [%i]\n----------------------------\n----------------------------\n", sockfd);
+    printf("Sending to client with fd [%i]: %s", sockfd, buffer);
+    do_send(sockfd, buffer, BUFFER_SIZE);
+    printf("Echo sent\n\n");
 
     return KEEP_COMMUNICATION;
   }
@@ -137,7 +134,7 @@ void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no) {
 }
 
 void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr) {
-  if ( bind(sockfd, (struct sockaddr *) serv_addr_ptr, sizeof(struct sockaddr_in))<0 ) {  //need cast generic
+  if ( bind(sockfd, (struct sockaddr *) serv_addr_ptr, sizeof(struct sockaddr_in))<0 ) {  //cast generic struct
     error("Error - bind");
   }
 }
@@ -158,24 +155,15 @@ int slot_available(struct Client cli_base[]) {
 void welcome(int sockfd) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
-  //char welcome[] = "Welcome! Connection established with the Talkr server";
-
   strcpy(buffer, WELCOME_MSG);
 
-  if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-    error("Error - welcome emission");
-  }
+  do_send(sockfd, buffer, BUFFER_SIZE);
 }
 
 void refuse(int sockfd) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
-  //char msg[]="Refused! Server cannot accept anymore incoming connections, retry later...\n";
-
   strcpy(buffer, REFUSE_MSG);
 
-  if (send(sockfd, buffer, BUFFER_SIZE, 0) < 0) {       //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-    error("Error - welcome emission");
-
-  }
+  do_send(sockfd, buffer, BUFFER_SIZE);
 }

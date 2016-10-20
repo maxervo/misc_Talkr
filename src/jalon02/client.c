@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include <unistd.h>
-
 #include <netdb.h>
 #include <netinet/in.h> // struct sockaddr_in
-
-#include <string.h>
 
 #include "common.h"
 #include "client.h"
@@ -39,13 +36,12 @@ int main(int argc, char const *argv[]) {
     error("Error - connection");
   }
 
-  //Receive Welcome
+  //Receive Welcome/Refuse msg
   memset(buffer, 0, BUFFER_SIZE);
-  if (recv(sockfd, buffer, BUFFER_SIZE, 0) > 0) {    //if recv = 0, communication closed by server OK    //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-    printf("%s\n", buffer);
-    if (strcmp(buffer, REFUSE_MSG) == 0){
-      error("Error - connection");
-    }
+  do_recv(sockfd, buffer, BUFFER_SIZE);
+  printf("%s\n", buffer);
+  if (strcmp(buffer, REFUSE_MSG) == 0){
+    error("Error - connection");
   }
 
   //Main Client Loop
@@ -54,31 +50,24 @@ int main(int argc, char const *argv[]) {
     memset(buffer, 0, BUFFER_SIZE);
     fgets(buffer, BUFFER_SIZE, stdin);
 
-    //Send
-    if (send(sockfd, buffer, BUFFER_SIZE, 0) >= 0) {    //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-      printf("Msg sent\n");
-    }
-    else {
-      error("Error - send");
-    }
+    do_send(sockfd, buffer, BUFFER_SIZE);
+    printf("Msg sent\n");
 
     //Quit
     if (strcmp(buffer, QUIT_MSG) == 0) {
       printf("Client decided to quit the chat\n");
+      close(sockfd);
       return EXIT_SUCCESS;
     }
 
     //Receive Echo
     memset(buffer, 0, BUFFER_SIZE);
-    if (recv(sockfd, buffer, BUFFER_SIZE, 0) >= 0) {    //if recv = 0, communication closed by server OK    //Later on: add a security "do while" loop for bytes, interesting for busy interface or embedded systems with small network buffer
-      printf("Echo received: %s\n", buffer);
-    }
-    else {
-      error("Error - echo reception");
-    }
+    do_recv(sockfd, buffer, BUFFER_SIZE);
+    printf("Echo received: %s\n", buffer);
+
   }
 
-  return EXIT_SUCCESS;  //optional line, indeed client quits the program with "/quit" or ctrl+d
+  return EXIT_SUCCESS;  //optional line, indeed client quits the program with "/quit" or ctrl+c
 }
 
 
@@ -95,6 +84,6 @@ struct hostent* get_server(const char *host_target) {
 void init_serv_address(struct hostent* server, struct sockaddr_in* serv_addr_ptr, int port_no) {
   memset(serv_addr_ptr, 0, sizeof(struct sockaddr_in));
   serv_addr_ptr->sin_family = AF_INET;
-  memcpy(server->h_addr, &(serv_addr_ptr->sin_addr.s_addr), server->h_length);  //why can't do assign direct? because of network order endian?, no need htons(ip address) ? TODO
+  memcpy(server->h_addr, &(serv_addr_ptr->sin_addr.s_addr), server->h_length);
   serv_addr_ptr->sin_port = htons(port_no);  //convert to network order
 }

@@ -11,13 +11,13 @@ stdio.h
 -
 stdlib.h
 -
+string.h
+-
 unistd.h
 -
 netdb.h
 -
 netinet/in.h
--
-string.h
 -
 common.h
 /home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.h
