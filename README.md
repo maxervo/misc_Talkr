@@ -1,5 +1,5 @@
 Description
-Chat : client/server
+Talkr : client/server
 
 
 

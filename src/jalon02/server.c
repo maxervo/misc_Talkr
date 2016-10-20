@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h>      //Later on, do libevent for asynchronous event based server
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -6,13 +6,15 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#include "common.h"
 #include "server.h"
 
 int main(int argc, char* argv[]) {
   struct sockaddr_in serv_addr, cli_addr;
-  int master_sockfd, cli_sock[MAX_NO_CLI];
+  int master_sockfd;
+  struct Client cli_base[MAX_NO_CLI];   //array chosen instead of lists because: max size known
   int new_sockfd;
-  fd_set read_fds;
+  fd_set read_fds, read_fds_copy; //copy because of select, to be clean
   int max_fd;
   int index_available;
 
@@ -27,75 +29,141 @@ int main(int argc, char* argv[]) {
   port_no = atoi(argv[1]);
 
   //Preparing server
-  master_sockfd = do_socket();      //add SO_REUSEADDR
+  master_sockfd = create_socket();
   init_serv_address(&serv_addr, port_no);
-  do_bind(sockfd, &serv_addr);
+  do_bind(master_sockfd, &serv_addr);
 
   //Client sockets
-  for(int i=0; i < MAX_NO_CLI; i++) {
-    cli_sock[i] = 0;
-  }
+  init_client_base(cli_base);
 
   //Listen
-  if(listen(sockfd, MAX_NUM_QUEUE) < 0) {
+  if(listen(master_sockfd, MAX_NUM_QUEUE) < 0) {
     error("Error - listen");
   }
 
-
+  //Main Server Loop
   while(1) {
 
     //Workspace fd set preparation
     FD_ZERO(&read_fds);
-    FD_SET(master_sockfd, &read_fds);
+    FD_SET(master_sockfd, &read_fds); //Add listening socket
     max_fd = master_sockfd;
-    for (int i = 0; i < MAX_NO_CLI; i++) {
-      if (cli_sock[i] > 0) {
-        FD_SET(cli_sock[i], &read_fds);
-        max_fd = (cli_sock[i] > max_fd)? cli_sock[i] : max_fd;
+    int i;
+    for (i = 0; i < MAX_NO_CLI; i++) {  //Add all "already connected" client sockets
+      if (cli_base[i].fd > EMPTY_SLOT) {  //Considering "non-error" slots (thus non negative), and "non-empty" slots
+        FD_SET(cli_base[i].fd, &read_fds);
+        max_fd = (cli_base[i].fd > max_fd)? cli_base[i].fd : max_fd;
       }
     }
 
-    if(select(max_fd + 1, &read_fds, NULL, NULL, NULL) == -1) {
-      error("Error - select")
+    //Activity monitoring
+    read_fds_copy = read_fds;
+    if(select(max_fd + 1, &read_fds_copy, NULL, NULL, NULL) == -1) {
+      error("Error - select");
     }
 
     //New connection
-    if (FD_ISSET(master_sockfd, &read_fds)) {
-      new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len)
-      if (index_available = slotfd_available(cli_sock)) {
-        cli_sock[index_available] = new_sockfd;
+    if (FD_ISSET(master_sockfd, &read_fds_copy)) {
+      new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
-        //do stuff send stuff welcome
+      if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
+        printf("New connection! Client accepted\n\n");
+        cli_base[index_available].fd = new_sockfd;
+        welcome(new_sockfd);
       }
-      else {  // no more slots available, limit reached
-        //send msg error
+      else {  //No more slots available, limit reached
+        printf("New connection! Client refused\n\n");
+        refuse(new_sockfd);   //Sending error msg
         close(new_sockfd);
       }
     }
 
-    //Already client IO
+    //Client already connected : IO
     else {
-      for (int i = 0; i < MAX_NO_CLI; i++) {
-        if (FD_ISSET(cli_sock[i], &read_fds)) {
-          //read what he sent, or close connection...etc
+      int i;
+      for (i = 0; i < MAX_NO_CLI; i++) {
+        if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
+          if ( handle(cli_base[i].fd) == CLOSE_COMMUNICATION) {
+            cli_base[i].fd = EMPTY_SLOT;
+          }
         }
       }
     }
   }
 
-  /*
-  //Server Loop : Acceptance Queue
-  for (int i=0; i < MAX_NO_CONNECTIONS; i++) {
-    new_sockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &cli_len);   //Blocked, (Sockets config: Blocking), so only one connection opened at a time
-    if (new_sockfd < 0) {
-      error("Error - accept");
-    }
-    while(handle(new_sockfd)){     //while the connection is open
-      //Handling each time
-    }
-    close(new_sockfd);
-  }
-  close(sockfd);*/
-
   return EXIT_SUCCESS;
+}
+
+int handle(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+
+  //Abrupt close by client
+  if( do_recv(sockfd, buffer, BUFFER_SIZE) == CLOSE_ABRUPT ) {
+    printf("Connection closed abruptly by remote peer\n");
+    return CLOSE_COMMUNICATION;
+  }
+
+  //Quit
+  else if(strcmp(buffer,QUIT_MSG) == 0) {
+    printf("Quit msg received : connection closed by client\n");
+    close(sockfd);
+    return CLOSE_COMMUNICATION;
+  }
+
+  //Msg
+  else {
+    printf("Sending to client with fd [%i]: %s", sockfd, buffer);
+    do_send(sockfd, buffer, BUFFER_SIZE);
+    printf("Echo sent\n\n");
+
+    return KEEP_COMMUNICATION;
+  }
+
+}
+
+void init_client_base(struct Client *cli_base) {
+  memset(cli_base, 0, MAX_NO_CLI*sizeof(struct Client));  //Considered NULL values 0, clean way would be manual init
+}
+
+void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no) {
+  memset(serv_addr_ptr, 0, sizeof(struct sockaddr_in));
+  serv_addr_ptr->sin_family = AF_INET;
+  serv_addr_ptr->sin_addr.s_addr = htonl(INADDR_ANY);  //INADDR_ANY : all interfaces - not just "localhost", multiple network interfaces OK
+  serv_addr_ptr->sin_port = htons(port_no);  //convert to network order
+}
+
+void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr) {
+  if ( bind(sockfd, (struct sockaddr *) serv_addr_ptr, sizeof(struct sockaddr_in))<0 ) {  //cast generic struct
+    error("Error - bind");
+  }
+}
+
+int slot_available(struct Client cli_base[]) {
+  int i = 0;
+  while(i <= MAX_NO_CLI) {
+    if (cli_base[i].fd == EMPTY_SLOT) {
+      return i;
+    }
+    else {
+      i++;
+    }
+  }
+  return SLOT_UNAVAILABLE;
+}
+
+void welcome(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  strcpy(buffer, WELCOME_MSG);
+
+  do_send(sockfd, buffer, BUFFER_SIZE);
+}
+
+void refuse(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  strcpy(buffer, REFUSE_MSG);
+
+  do_send(sockfd, buffer, BUFFER_SIZE);
 }

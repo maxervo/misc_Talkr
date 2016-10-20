@@ -4,6 +4,7 @@ project(RE216_JALON02)
 
 #add here source files you need to compile and link to the client app
 SET(SRC_CLIENT
+	common.c
 	client.c
 	)
 
@@ -13,6 +14,7 @@ add_executable(RE216_JALON02_CLIENT ${SRC_CLIENT})
 
 #add here source files you need to compile and link to the server app
 SET(SRC_SERVER
+	common.c
         server.c)
 
 
