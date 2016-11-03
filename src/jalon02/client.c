@@ -63,7 +63,7 @@ int main(int argc, char const *argv[]) {
     //Receive Echo
     memset(buffer, 0, BUFFER_SIZE);
     do_recv(sockfd, buffer, BUFFER_SIZE);
-    printf("Echo received: %s\n", buffer);
+    printf("Msg received: %s\n", buffer);
 
   }
 

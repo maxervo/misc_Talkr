@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <time.h>
 
 #include "common.h"
 #include "server.h"
@@ -68,7 +70,7 @@ int main(int argc, char* argv[]) {
 
       if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
         printf("New connection! Client accepted\n\n");
-        cli_base[index_available].fd = new_sockfd;
+        set_client(&cli_base[index_available], new_sockfd, cli_addr);
         welcome(new_sockfd);
       }
       else {  //No more slots available, limit reached
@@ -83,8 +85,8 @@ int main(int argc, char* argv[]) {
       int i;
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
-          if ( handle(&cli_base[i]) == CLOSE_COMMUNICATION) {
-            cli_base[i].fd = EMPTY_SLOT;
+          if ( handle(&cli_base[i], cli_base) == CLOSE_COMMUNICATION) {
+            reset_client_slot(cli_base+i);
           }
         }
       }
@@ -94,12 +96,14 @@ int main(int argc, char* argv[]) {
   return EXIT_SUCCESS;
 }
 
-int handle(struct Client *cli_base) {
-  int sockfd=cli_base->fd;
+int handle(struct Client *client, struct Client *cli_base) {
+  int sockfd = client->fd;
   char alias[ALIAS_SIZE];
-  strncpy(alias,cli_base->alias,ALIAS_SIZE);
+  strncpy(alias,client->alias,ALIAS_SIZE);
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
+  char buffer_copy[BUFFER_SIZE];
+  memset(buffer_copy, 0, BUFFER_SIZE);
 
   const char space[2] = " ";
   char *token = NULL; // can be /quit /nick /whois /who
@@ -111,12 +115,9 @@ int handle(struct Client *cli_base) {
     return CLOSE_COMMUNICATION;
   }
   else{ // extract the first word of the msg receive
-    token = strtok(buffer, space); // can be /quit /nick /whois /who
-    token_arg = strtok(NULL, space); token_arg[strlen(token_arg)-1] = NULL; //remove \n
-    printf("%s\n",token_arg);
+    strncpy(buffer_copy, buffer, BUFFER_SIZE);// core dumped
+    token = strtok(buffer_copy, space); // can be /quit /nick /whois /who
   }
-
-
 
   //Quit
   if(strcmp(buffer,QUIT_MSG) == 0) {
@@ -125,14 +126,17 @@ int handle(struct Client *cli_base) {
     return CLOSE_COMMUNICATION;
   }
 
-  //set nickname
+  //Set nickname
   else if(strcmp(token,NICK_MSG) == 0) {
+    token_arg = strtok(NULL, space);
     printf("Nick msg received \n");
-    if (strlen(token_arg) < ALIAS_SIZE) {
-      set_nickname(cli_base, token_arg);
+
+    if (token_arg != NULL && strlen(token_arg) < ALIAS_SIZE+1) {  //+1 for the \n
+      token_arg[strlen(token_arg)-1] = '\0';   //remove \n
+      set_nickname(client, token_arg, cli_base);
     }
     else {
-      printf("Alias too long\n"); //TODO send msg to client to try again
+      printf("Alias incorrect\n"); //TODO send msg to client to try again //non existent or too long
     }
 
     //do_send(sockfd, buffer, BUFFER_SIZE); //TODO send confirmation ok
@@ -140,14 +144,40 @@ int handle(struct Client *cli_base) {
     return KEEP_COMMUNICATION;
   }
 
-  // No nickname
-  /*else if(strcmp(alias,NULL)) {
-    printf("No nickname set yet \n");
-  }*/
+  //Demand alias again
+  else if(strlen(client->alias) == 0) {
+    printf("Client has not set his nickname yet\n");
+    inform_nick_demand(sockfd);
+    return KEEP_COMMUNICATION;
+  }
+
+  //Whois
+  else if(strcmp(token,WHOIS_MSG) == 0) {
+    token_arg = strtok(NULL, space);
+    printf("Whois msg received\n");
+
+    if (token_arg != NULL && strlen(token_arg) < ALIAS_SIZE+1) {  //+1 for the \n
+      token_arg[strlen(token_arg)-1] = '\0';   //remove \n
+      inform_whois(client, token_arg, cli_base);
+    }
+    else {
+      printf("Alias incorrect\n"); //TODO send msg to client to try again //non existent or too long
+    }
+
+    //do_send(sockfd, buffer, BUFFER_SIZE); //TODO send confirmation ok
+    //printf("Echo sent\n\n");
+    return KEEP_COMMUNICATION;
+  }
+
+  //Who
+  else if(strcmp(buffer,WHO_MSG) == 0) {
+    printf("Who msg received\n");
+    inform_who(sockfd, cli_base);
+    return KEEP_COMMUNICATION;
+  }
 
   //Msg
   else {
-    printf("OK\n");
     printf("Sending to client with fd [%i]: %s", sockfd, buffer);
     do_send(sockfd, buffer, BUFFER_SIZE);
     printf("Echo sent\n\n");
@@ -159,7 +189,13 @@ int handle(struct Client *cli_base) {
 }
 
 void init_client_base(struct Client *cli_base) {
-  memset(cli_base, 0, MAX_NO_CLI*sizeof(struct Client));  //Considered NULL values 0, clean way would be manual init
+  for(int i=0; i < MAX_NO_CLI; i++) {
+    cli_base[i].fd = EMPTY_SLOT;
+    cli_base[i].alias[0] = '\0';
+    cli_base[i].con_time[0] = '\0';
+    cli_base[i].ip[0] = '\0';
+    cli_base[i].port = 0;
+  }
 }
 
 void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no) {
@@ -196,10 +232,18 @@ void welcome(int sockfd) {
   do_send(sockfd, buffer, BUFFER_SIZE);
 }
 
-void inform_nick(int sockfd) {
+void inform_nick_set(int sockfd) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
-  strcpy(buffer, "Your nickname");
+  strcpy(buffer, "Your nickname has been set.\n");
+
+  do_send(sockfd, buffer, BUFFER_SIZE);
+}
+
+void inform_nick_demand(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  strcpy(buffer, "Please set a nickname first with /nick\n");
 
   do_send(sockfd, buffer, BUFFER_SIZE);
 }
@@ -212,10 +256,109 @@ void refuse(int sockfd) {
   do_send(sockfd, buffer, BUFFER_SIZE);
 }
 
-void set_nickname(struct Client *cli_base, char *alias){
+void set_nickname(struct Client *client, char *alias, struct Client *cli_base){
   printf("Set nickname : %s\n", alias);
-  strncpy(cli_base->alias, alias, ALIAS_SIZE);// core dumped
-  printf("Nickname set\n");
+
+  if (check_nickname(alias, cli_base)) {
+    strncpy(client->alias, alias, ALIAS_SIZE);
+    inform_nick_set(client->fd);
+    printf("Nickname set\n");
+  }
+  else {
+    printf("Nickname already used by another client\n");
+    inform_nick_used(client->fd);
+  }
 
   //strncpy("pouet",cli_base->alias,sizeof(ALIAS_SIZE)); core dumped
+}
+
+void inform_nick_used(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  strcpy(buffer, "Nickname already used by another client\n");
+
+  do_send(sockfd, buffer, BUFFER_SIZE);
+}
+
+int check_nickname(char *alias, struct Client *cli_base) {
+  for(int i=0; i < MAX_NO_CLI; i++) {
+    if(strcmp(alias, cli_base[i].alias) == 0) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+void reset_client_slot(struct Client *client) {
+  client->fd = EMPTY_SLOT;
+  client->alias[0] = '\0';
+  client->con_time [0] = '\0';
+  client->ip[0] = '\0';
+  client->port = 0;
+}
+
+void inform_who(int sockfd,struct Client *cli_base) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  strcat(buffer, "\n");
+  for (int i = 0; i < MAX_NO_CLI; i++) {
+    if (cli_base[i].fd != EMPTY_SLOT) {
+      strcat(buffer, cli_base[i].alias);
+      strcat(buffer, "\n");
+    }
+  }
+
+  do_send(sockfd, buffer, BUFFER_SIZE);
+}
+
+void set_client(struct Client* client, int new_sockfd, struct sockaddr_in cli_addr) {
+
+  //connection time
+  time_t current_time = time(NULL);
+  struct tm *info = localtime(&current_time);
+  strftime(client->con_time, CON_TIME_SIZE, "%d/%m/%Y %H:%M:%S", info);
+
+  //fd
+  client->fd = new_sockfd;
+
+  //ip address
+  strncpy(client->ip, inet_ntoa(cli_addr.sin_addr), IP_SIZE);
+  client->port = cli_addr.sin_port;
+
+  printf("%s and %d\n", client->ip, client->port);
+
+}
+
+void inform_whois(struct Client *client, char *alias, struct Client *cli_base) {
+  char str_port[10] = {0};
+  printf("Search nickname : %s\n", alias);
+
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  strcat(buffer, "\n");
+
+  //Searching client by alias
+  for (int i = 0; i < MAX_NO_CLI; i++) {
+    if (strcmp(cli_base[i].alias, alias) == 0 ) {
+      //printf("so we have: %s\n", cli_base[i].alias);
+      strcat(buffer, "User ");
+      strcat(buffer, cli_base[i].alias);
+      strcat(buffer, " connected since ");
+      strcat(buffer, cli_base[i].con_time);
+      strcat(buffer, " with ip address ");
+      strcat(buffer, cli_base[i].ip);
+      strcat(buffer, " and port number ");
+      sprintf(str_port, "%d", cli_base[i].port);
+      strcat(buffer, str_port);
+      strcat(buffer, "\n");
+
+      do_send(client->fd, buffer, BUFFER_SIZE);
+      return;
+    }
+  }
+
+  //Client not find
+  strcat(buffer, "Client not found, unkown alias.");
+  do_send(client->fd, buffer, BUFFER_SIZE);
+
 }
