@@ -132,6 +132,11 @@
 			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02</location>
 		</link>
 		<link>
+			<name>[Subprojects]/RE216_JALON03</name>
+			<type>2</type>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03</location>
+		</link>
+		<link>
 			<name>[Targets]</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -303,6 +308,96 @@
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/Source Files/common.c</name>
+			<type>1</type>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/Source Files/server.c</name>
+			<type>1</type>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/server.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_SERVER/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Source Files/common.c</name>
+			<type>1</type>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Source Files/client.c</name>
+			<type>1</type>
+			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/client.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Object Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>

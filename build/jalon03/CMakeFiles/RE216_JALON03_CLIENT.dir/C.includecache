@@ -1,0 +1,50 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/client.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+netdb.h
+-
+netinet/in.h
+-
+common.h
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.h
+client.h
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/client.h
+
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/client.h
+
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+sys/types.h
+-
+sys/socket.h
+-
+netdb.h
+-
+netinet/in.h
+-
+common.h
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.h
+
+/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.h
+

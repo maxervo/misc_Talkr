@@ -36,6 +36,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon01/cmake_install.cmake")
   include("/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon02/cmake_install.cmake")
+  include("/home/rstoke/earth/workspace/school/project network_programming/project/build/jalon03/cmake_install.cmake")
 
 endif()
 

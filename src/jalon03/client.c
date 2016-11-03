@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
   }
 
   //Main Client Loop
-  while(1) {  //maybe do more elegant way
+  while(1) {  
     printf("Input msg: ");
     memset(buffer, 0, BUFFER_SIZE);
     fgets(buffer, BUFFER_SIZE, stdin);
@@ -63,7 +63,7 @@ int main(int argc, char const *argv[]) {
     //Receive Echo
     memset(buffer, 0, BUFFER_SIZE);
     do_recv(sockfd, buffer, BUFFER_SIZE);
-    printf("Echo received: %s\n", buffer);
+    printf("Msg received: %s\n", buffer);
 
   }
 

@@ -248,6 +248,100 @@ clean: jalon02/CMakeFiles/RE216_JALON02_CLIENT.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory jalon03
+
+# Convenience name for "all" pass in the directory.
+jalon03/all: jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/all
+jalon03/all: jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/all
+
+.PHONY : jalon03/all
+
+# Convenience name for "clean" pass in the directory.
+jalon03/clean: jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/clean
+jalon03/clean: jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/clean
+
+.PHONY : jalon03/clean
+
+# Convenience name for "preinstall" pass in the directory.
+jalon03/preinstall:
+
+.PHONY : jalon03/preinstall
+
+#=============================================================================
+# Target rules for target jalon03/CMakeFiles/RE216_JALON03_SERVER.dir
+
+# All Build rule for target.
+jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/all:
+	$(MAKE) -f jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/build.make jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/depend
+	$(MAKE) -f jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/build.make jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" --progress-num=14,15,16 "Built target RE216_JALON03_SERVER"
+.PHONY : jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/all
+
+# Include target in all.
+all: jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 3
+	$(MAKE) -f CMakeFiles/Makefile2 jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 0
+.PHONY : jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/rule
+
+# Convenience name for target.
+RE216_JALON03_SERVER: jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/rule
+
+.PHONY : RE216_JALON03_SERVER
+
+# clean rule for target.
+jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/clean:
+	$(MAKE) -f jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/build.make jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/clean
+.PHONY : jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/clean
+
+# clean rule for target.
+clean: jalon03/CMakeFiles/RE216_JALON03_SERVER.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir
+
+# All Build rule for target.
+jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/all:
+	$(MAKE) -f jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/build.make jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/depend
+	$(MAKE) -f jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/build.make jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" --progress-num=11,12,13 "Built target RE216_JALON03_CLIENT"
+.PHONY : jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/all
+
+# Include target in all.
+all: jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 3
+	$(MAKE) -f CMakeFiles/Makefile2 jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/rstoke/earth/workspace/school/project network_programming/project/build/CMakeFiles" 0
+.PHONY : jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/rule
+
+# Convenience name for target.
+RE216_JALON03_CLIENT: jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/rule
+
+.PHONY : RE216_JALON03_CLIENT
+
+# clean rule for target.
+jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/clean:
+	$(MAKE) -f jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/build.make jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/clean
+.PHONY : jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/clean
+
+# clean rule for target.
+clean: jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Special targets to cleanup operation of make.
 
 # Special rule to run CMake to check the build system integrity.
