@@ -1,1 +1,1 @@
-/usr/bin/cc  -g   CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o  -o RE216_JALON01_CLIENT -rdynamic 
+/usr/bin/cc  -g    CMakeFiles/RE216_JALON01_CLIENT.dir/client.c.o  -o RE216_JALON01_CLIENT -rdynamic 

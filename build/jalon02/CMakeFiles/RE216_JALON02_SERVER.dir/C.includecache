@@ -6,29 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.c
-stdio.h
--
-stdlib.h
--
-string.h
--
-unistd.h
--
-sys/types.h
--
-sys/socket.h
--
-netdb.h
--
-netinet/in.h
--
-common.h
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/common.h
 
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.h
-
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/server.c
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/server.c
 stdio.h
 -
 stdlib.h
@@ -44,9 +24,9 @@ sys/socket.h
 netinet/in.h
 -
 common.h
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/common.h
 server.h
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/server.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/server.h
 
-/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/server.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon02/server.h
 

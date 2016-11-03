@@ -19,13 +19,14 @@ struct Client {
 };
 
 void error(const char *msg);
-int handle(int sockfd);
+int handle(struct Client *cli_base);
 void init_serv_address(struct sockaddr_in *serv_addr_ptr, int port_no);
 void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr);
 int slot_available(struct Client cli_base[]);
 void welcome(int sockfd);
 void refuse(int sockfd);
 void init_client_base(struct Client *cli_base);
+void set_nickname(struct Client *cli_base,char * buffer);
 
 
 

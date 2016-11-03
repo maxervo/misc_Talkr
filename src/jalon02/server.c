@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
       int i;
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
-          if ( handle(cli_base[i].fd) == CLOSE_COMMUNICATION) {
+          if ( handle(&cli_base[i]) == CLOSE_COMMUNICATION) {
             cli_base[i].fd = EMPTY_SLOT;
           }
         }
@@ -94,28 +94,57 @@ int main(int argc, char* argv[]) {
   return EXIT_SUCCESS;
 }
 
-int handle(int sockfd) {
+int handle(struct Client *cli_base) {
+  int sockfd=cli_base->fd;
+  char alias[ALIAS_SIZE];
+  strncpy(alias,cli_base->alias,ALIAS_SIZE);
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
+
+  const char space[2] = "";
+  char *first_token= strtok(buffer, space); // can be /quit /nick /whois /who
+  printf("%s\n",first_token );
 
   //Abrupt close by client
   if( do_recv(sockfd, buffer, BUFFER_SIZE) == CLOSE_ABRUPT ) {
     printf("Connection closed abruptly by remote peer\n");
     return CLOSE_COMMUNICATION;
   }
+  else{ // extract the first word of the msg receive
+    const char space[2] = "";
+    char *first_token;
+    printf("%s\n",buffer );
+    first_token= strtok(buffer, space); // can be /quit /nick /whois /who
+    printf("%s\n",first_token );
+  }
 
   //Quit
-  else if(strcmp(buffer,QUIT_MSG) == 0) {
+  if(strcmp(buffer,QUIT_MSG) == 0) {
     printf("Quit msg received : connection closed by client\n");
     close(sockfd);
     return CLOSE_COMMUNICATION;
   }
+
+  //set nickname
+  else if(strcmp(first_token,NICK_MSG) == 0) {
+    printf("Nick msg received \n");
+    set_nickname(cli_base,buffer);
+    do_send(sockfd, buffer, BUFFER_SIZE);
+    printf("Echo sent\n\n");
+    return KEEP_COMMUNICATION;
+  }
+
+  // No nickname
+  /*else if(strcmp(alias,NULL)) {
+    printf("No nickname set yet \n");
+  }*/
 
   //Msg
   else {
     printf("Sending to client with fd [%i]: %s", sockfd, buffer);
     do_send(sockfd, buffer, BUFFER_SIZE);
     printf("Echo sent\n\n");
+    printf("%s",alias);
 
     return KEEP_COMMUNICATION;
   }
@@ -166,4 +195,18 @@ void refuse(int sockfd) {
   strcpy(buffer, REFUSE_MSG);
 
   do_send(sockfd, buffer, BUFFER_SIZE);
+}
+
+void set_nickname(struct Client *cli_base,char * buffer){
+  const char s[2] = "";
+  char *token;
+
+  /* get the first token */
+  token = strtok(buffer, s);
+  token = strtok(buffer, s);
+  printf("Set nickname : %s\n",token );
+  strncpy(cli_base->alias,token, ALIAS_SIZE);// core dumped
+  printf("Set nickname : %s\n",cli_base->alias );
+
+  //strncpy("pouet",cli_base->alias,sizeof(ALIAS_SIZE)); core dumped
 }
