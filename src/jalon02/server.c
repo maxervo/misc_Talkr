@@ -101,9 +101,9 @@ int handle(struct Client *cli_base) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
 
-  const char space[2] = "";
-  char *first_token= strtok(buffer, space); // can be /quit /nick /whois /who
-  printf("%s\n",first_token );
+  const char space[2] = " ";
+  char *token = NULL; // can be /quit /nick /whois /who
+  char *token_arg = NULL;
 
   //Abrupt close by client
   if( do_recv(sockfd, buffer, BUFFER_SIZE) == CLOSE_ABRUPT ) {
@@ -111,12 +111,12 @@ int handle(struct Client *cli_base) {
     return CLOSE_COMMUNICATION;
   }
   else{ // extract the first word of the msg receive
-    const char space[2] = "";
-    char *first_token;
-    printf("%s\n",buffer );
-    first_token= strtok(buffer, space); // can be /quit /nick /whois /who
-    printf("%s\n",first_token );
+    token = strtok(buffer, space); // can be /quit /nick /whois /who
+    token_arg = strtok(NULL, space); token_arg[strlen(token_arg)-1] = NULL; //remove \n
+    printf("%s\n",token_arg);
   }
+
+
 
   //Quit
   if(strcmp(buffer,QUIT_MSG) == 0) {
@@ -126,11 +126,17 @@ int handle(struct Client *cli_base) {
   }
 
   //set nickname
-  else if(strcmp(first_token,NICK_MSG) == 0) {
+  else if(strcmp(token,NICK_MSG) == 0) {
     printf("Nick msg received \n");
-    set_nickname(cli_base,buffer);
-    do_send(sockfd, buffer, BUFFER_SIZE);
-    printf("Echo sent\n\n");
+    if (strlen(token_arg) < ALIAS_SIZE) {
+      set_nickname(cli_base, token_arg);
+    }
+    else {
+      printf("Alias too long\n"); //TODO send msg to client to try again
+    }
+
+    //do_send(sockfd, buffer, BUFFER_SIZE); //TODO send confirmation ok
+    //printf("Echo sent\n\n");
     return KEEP_COMMUNICATION;
   }
 
@@ -141,6 +147,7 @@ int handle(struct Client *cli_base) {
 
   //Msg
   else {
+    printf("OK\n");
     printf("Sending to client with fd [%i]: %s", sockfd, buffer);
     do_send(sockfd, buffer, BUFFER_SIZE);
     printf("Echo sent\n\n");
@@ -189,6 +196,14 @@ void welcome(int sockfd) {
   do_send(sockfd, buffer, BUFFER_SIZE);
 }
 
+void inform_nick(int sockfd) {
+  char buffer[BUFFER_SIZE];
+  memset(buffer, 0, BUFFER_SIZE);
+  strcpy(buffer, "Your nickname");
+
+  do_send(sockfd, buffer, BUFFER_SIZE);
+}
+
 void refuse(int sockfd) {
   char buffer[BUFFER_SIZE];
   memset(buffer, 0, BUFFER_SIZE);
@@ -197,16 +212,10 @@ void refuse(int sockfd) {
   do_send(sockfd, buffer, BUFFER_SIZE);
 }
 
-void set_nickname(struct Client *cli_base,char * buffer){
-  const char s[2] = "";
-  char *token;
-
-  /* get the first token */
-  token = strtok(buffer, s);
-  token = strtok(buffer, s);
-  printf("Set nickname : %s\n",token );
-  strncpy(cli_base->alias,token, ALIAS_SIZE);// core dumped
-  printf("Set nickname : %s\n",cli_base->alias );
+void set_nickname(struct Client *cli_base, char *alias){
+  printf("Set nickname : %s\n", alias);
+  strncpy(cli_base->alias, alias, ALIAS_SIZE);// core dumped
+  printf("Nickname set\n");
 
   //strncpy("pouet",cli_base->alias,sizeof(ALIAS_SIZE)); core dumped
 }

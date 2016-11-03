@@ -11,6 +11,7 @@
 #define CLOSE_COMMUNICATION 0
 #define EMPTY_SLOT 0
 
+
 struct Client {
   int fd;
   char alias[ALIAS_SIZE];
@@ -26,7 +27,7 @@ int slot_available(struct Client cli_base[]);
 void welcome(int sockfd);
 void refuse(int sockfd);
 void init_client_base(struct Client *cli_base);
-void set_nickname(struct Client *cli_base,char * buffer);
+void set_nickname(struct Client *cli_base, char *alias);
 
 
 
