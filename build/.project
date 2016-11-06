@@ -2,7 +2,8 @@
 <projectDescription>
 	<name>RE216-Debug@build</name>
 	<comment></comment>
-	<projects></projects>
+	<projects>
+	</projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.make.core.makeBuilder</name>
@@ -42,11 +43,11 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.arguments</key>
-					<value>-j4</value>
+					<value>-j8</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>/home/rstoke/earth/workspace/school/project network_programming/project/build</value>
+					<value>/home/guillaume/Documents/Telecom/RE216/school-chat/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
@@ -82,7 +83,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.location</key>
-					<value>/home/rstoke/earth/workspace/school/project network_programming/project/build</value>
+					<value>/home/guillaume/Documents/Telecom/RE216/school-chat/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
@@ -96,7 +97,8 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.cdt.make.core.ScannerConfigBuilder</name>
-			<arguments/>
+			<arguments>
+			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
@@ -109,7 +111,7 @@
 		<link>
 			<name>[Source directory]</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src</location>
 		</link>
 		<link>
 			<name>[Subprojects]</name>
@@ -119,22 +121,22 @@
 		<link>
 			<name>[Subprojects]/RE216</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src</location>
 		</link>
 		<link>
 			<name>[Subprojects]/RE216_JALON01</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon01</location>
 		</link>
 		<link>
 			<name>[Subprojects]/RE216_JALON02</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon02</location>
 		</link>
 		<link>
 			<name>[Subprojects]/RE216_JALON03</name>
 			<type>2</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03</location>
 		</link>
 		<link>
 			<name>[Targets]</name>
@@ -159,7 +161,7 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_SERVER/Source Files/server.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/server.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon01/server.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_SERVER/Header Files</name>
@@ -199,7 +201,7 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_CLIENT/Source Files/client.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon01/client.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon01/client.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON01_CLIENT/Header Files</name>
@@ -239,12 +241,12 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files/common.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon02/common.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_SERVER/Source Files/server.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/server.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon02/server.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_SERVER/Header Files</name>
@@ -284,12 +286,12 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Source Files/common.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/common.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon02/common.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Source Files/client.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon02/client.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon02/client.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON02_CLIENT/Header Files</name>
@@ -329,12 +331,12 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON03_SERVER/Source Files/common.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/common.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON03_SERVER/Source Files/server.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/server.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/server.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON03_SERVER/Header Files</name>
@@ -374,12 +376,12 @@
 		<link>
 			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Source Files/common.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/common.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/common.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Source Files/client.c</name>
 			<type>1</type>
-			<location>/home/rstoke/earth/workspace/school/project network_programming/project/src/jalon03/client.c</location>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/client.c</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Header Files</name>
@@ -398,6 +400,96 @@
 		</link>
 		<link>
 			<name>[Targets]/[exe] RE216_JALON03_CLIENT/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/Source Files/common.c</name>
+			<type>1</type>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon04/common.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/Source Files/server.c</name>
+			<type>1</type>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon04/server.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_SERVER/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/Source Files/common.c</name>
+			<type>1</type>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon04/common.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/Source Files/client.c</name>
+			<type>1</type>
+			<location>/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon04/client.c</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] RE216_JALON04_CLIENT/Object Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
