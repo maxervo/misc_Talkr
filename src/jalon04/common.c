@@ -9,10 +9,9 @@
 
 #include "common.h"
 
-void error(const char *msg)   //ATTENTION : program flow exit
-{
-    perror(msg);
-    exit(EXIT_FAILURE);
+void error(const char *msg) { //ATTENTION : program flow exit
+  perror(msg);
+  exit(EXIT_FAILURE);
 }
 
 int create_socket() {

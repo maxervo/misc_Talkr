@@ -25,8 +25,8 @@ int main(int argc, char* argv[]) {
 
   //Check Usage
   if (argc != 2) {
-      fprintf(stderr, "Usage: RE216_SERVER port\n");
-      return EXIT_FAILURE;
+    fprintf(stderr, "Usage: RE216_SERVER port\n");
+    return EXIT_FAILURE;
   }
   port_no = atoi(argv[1]);
 
@@ -55,48 +55,48 @@ int main(int argc, char* argv[]) {
     max_fd = master_sockfd;
     int i;
     for (i = 0; i < MAX_NO_CLI; i++) {  //Add all "already connected" client sockets
-      if (cli_base[i].fd > EMPTY_SLOT) {  //Considering "non-error" slots (thus non negative), and "non-empty" slots
-        FD_SET(cli_base[i].fd, &read_fds);
-        max_fd = (cli_base[i].fd > max_fd)? cli_base[i].fd : max_fd;
-      }
-    }
+    if (cli_base[i].fd > EMPTY_SLOT) {  //Considering "non-error" slots (thus non negative), and "non-empty" slots
+    FD_SET(cli_base[i].fd, &read_fds);
+    max_fd = (cli_base[i].fd > max_fd)? cli_base[i].fd : max_fd;
+  }
+}
 
-    //Activity monitoring
-    read_fds_copy = read_fds;
-    if(select(max_fd + 1, &read_fds_copy, NULL, NULL, &tv) == -1) {
-      error("Error - select");
-    }
+//Activity monitoring
+read_fds_copy = read_fds;
+if(select(max_fd + 1, &read_fds_copy, NULL, NULL, &tv) == -1) {
+  error("Error - select");
+}
 
-    //New connection
-    if (FD_ISSET(master_sockfd, &read_fds_copy)) {
-      new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
+//New connection
+if (FD_ISSET(master_sockfd, &read_fds_copy)) {
+  new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
-      if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
-        printf("New connection! Client accepted\n\n");
-        set_client(&cli_base[index_available], new_sockfd, cli_addr);
-        welcome(new_sockfd); //Sending welcome msg
-      }
-      else {  //No more slots available, limit reached
-        printf("New connection! Client refused\n\n");
-        refuse(new_sockfd);   //Sending error msg
-        close(new_sockfd);
-      }
-    }
+  if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
+    printf("New connection! Client accepted\n\n");
+    set_client(&cli_base[index_available], new_sockfd, cli_addr);
+    welcome(new_sockfd); //Sending welcome msg
+  }
+  else {  //No more slots available, limit reached
+    printf("New connection! Client refused\n\n");
+    refuse(new_sockfd);   //Sending error msg
+    close(new_sockfd);
+  }
+}
 
-    //Client already connected : IO
-    else {
-      int i;
-      for (i = 0; i < MAX_NO_CLI; i++) {
-        if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
-          if ( handle(&cli_base[i], cli_base) == CLOSE_COMMUNICATION) {
-            reset_client_slot(cli_base+i);
-          }
-        }
+//Client already connected : IO
+else {
+  int i;
+  for (i = 0; i < MAX_NO_CLI; i++) {
+    if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
+      if ( handle(&cli_base[i], cli_base) == CLOSE_COMMUNICATION) {
+        reset_client_slot(cli_base+i);
       }
     }
   }
+}
+}
 
-  return EXIT_SUCCESS;
+return EXIT_SUCCESS;
 }
 
 int handle(struct Client *client, struct Client *cli_base) {
@@ -394,7 +394,7 @@ void broadcast(int sockfd,struct Client *cli_base, char*buffer){
   int i;
   for (i=0;i<MAX_NO_CLI;i++){
     if(cli_base[i].fd!=0 && cli_base[i].fd!=sockfd ){
-        do_send(cli_base[i].fd, buffer, BUFFER_SIZE);
+      do_send(cli_base[i].fd, buffer, BUFFER_SIZE);
     }
   }
 }
@@ -406,8 +406,8 @@ void unicast(int sockfd,struct Client *cli_base, char*buffer,char * alias){
     if((strcmp(alias,cli_base[i].alias)==0) && cli_base[i].fd!=sockfd ){
       printf("L'alias trouvé est : %s\n", cli_base[i].alias);
       printf("L'alias trouvé est : %i\n", cli_base[i].fd);
-        do_send(cli_base[i].fd, buffer, BUFFER_SIZE);
-        break;
+      do_send(cli_base[i].fd, buffer, BUFFER_SIZE);
+      break;
     }
   }
 }

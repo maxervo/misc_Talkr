@@ -9,7 +9,8 @@
 #define ROOM_SIZE 25
 #define IP_SIZE 25
 #define MAX_NO_CLI 20
-#define BUFFER_SIZE 500     //Adapt according to the size of alias and max no client
+#define BUFFER_SERV_SIZE 500     //Adapt according to the size of alias and max no client
+#define BUFFER_CLI_SIZE BUFFER_SERV_SIZE + ALIAS_SIZE + 10     // adding a tolerance
 #define QUIT_MSG "/quit\n"  //Attention newline character captured as well by input
 #define WHO_MSG "/who\n"
 #define NICK_MSG "/nick"

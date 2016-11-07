@@ -16,7 +16,8 @@ int main(int argc, char const *argv[]) {
   int port_no;
   struct sockaddr_in serv_addr;
   struct hostent *server;
-  char buffer[BUFFER_SIZE];
+  char buffer_send[BUFFER_CLI_SIZE];
+  char buffer_receive[BUFFER__SIZE];
   fd_set read_fds, read_fds_copy;   //copy because of select, to be clean
 
   //Verifying arguments
@@ -41,10 +42,10 @@ int main(int argc, char const *argv[]) {
   }
 
   //Receive Welcome/Refuse msg
-  memset(buffer, 0, BUFFER_SIZE);
-  do_recv(srv_sockfd, buffer, BUFFER_SIZE);
-  printf("%s\n", buffer);
-  if (strcmp(buffer, REFUSE_MSG) == 0){
+  memset(buffer_receive, 0, BUFFER_CLI_SIZE);
+  do_recv(srv_sockfd, buffer_receive, BUFFER_CLI_SIZE);
+  printf("%s\n", buffer_receive);
+  if (strcmp(buffer_receive, REFUSE_MSG) == 0){
     error("Error - connection");
   }
 
@@ -72,32 +73,22 @@ int main(int argc, char const *argv[]) {
     // Msg from server
     if(FD_ISSET(srv_sockfd, &read_fds_copy)){
       //Receive Echo
-      memset(buffer, 0, BUFFER_SIZE);
-      do_recv(srv_sockfd, buffer, BUFFER_SIZE);
-      printf("Msg received: %s\n", buffer);
+      memset(buffer_receive, 0, BUFFER_CLI_SIZE);
+      do_recv(srv_sockfd, buffer_receive, BUFFER_CLI_SIZE);
+      printf("Msg received: %s\n", buffer_receive);
 
-      if (strncmp(buffer,ALIAS_MSG,sizeof(ALIAS_MSG)-1)==0) {
-        set_alias(buffer,alias);
-
+      if (strncmp(buffer_receive,ALIAS_MSG,sizeof(ALIAS_MSG)-1)==0) {
+        set_alias(buffer_receive,alias);
       }
 
     }
     if(FD_ISSET(0, &read_fds_copy)){
-      char msg_to_send[BUFFER_SIZE-ALIAS_SIZE];
-      memset(buffer, 0, BUFFER_SIZE);
-      fgets(msg_to_send, BUFFER_SIZE-ALIAS_SIZE, stdin);
-
-      printf("Alias %s\n", alias);
-      strcat(buffer, "[");
-      strcat(buffer, alias);
-      strcat(buffer, "]   ");
-      strcat(buffer, msg_to_send );
-
-      do_send(srv_sockfd, buffer, BUFFER_SIZE);
-      printf("Msg sent : %s", buffer);
+      memset(buffer_send, 0, BUFFER_SERV_SIZE);
+      fgets(buffer_send, BUFFER_SERV_SIZE, stdin);
+      do_send(srv_sockfd, buffer_send, BUFFER_SERV_SIZE);
 
       //Quit
-      if (strcmp(buffer, QUIT_MSG) == 0) {
+      if (strcmp(buffer_send, QUIT_MSG) == 0) {
         printf("Client decided to quit the chat\n");
         close(srv_sockfd);
         return EXIT_SUCCESS;
