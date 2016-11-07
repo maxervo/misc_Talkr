@@ -2,7 +2,7 @@
 #define COMMON_H
 
 #define REFUSE_MSG "[SERVER] Refused! Server cannot accept anymore incoming connections, retry later...\n"
-#define WELCOME_MSG "[SERVER] Welcome! Connection established with the Talkr server\nFirt of all, you need a nickname : use the commande /nick\n(example : >> /nick MyNickname)\n"
+#define WELCOME_MSG "[SERVER] Welcome! Connection established with the Talkr server\nFirt of all, you need a nickname : use the commande /nick <YourNickname>"
 #define ALIAS_MSG "[SERVER] new nickname ->"
 
 #define ALIAS_SIZE 25

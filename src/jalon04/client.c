@@ -16,8 +16,8 @@ int main(int argc, char const *argv[]) {
   int port_no;
   struct sockaddr_in serv_addr;
   struct hostent *server;
-  char buffer_send[BUFFER_CLI_SIZE];
-  char buffer_receive[BUFFER__SIZE];
+  char buffer_send[BUFFER_SERV_SIZE];
+  char buffer_receive[BUFFER_CLI_SIZE];
   fd_set read_fds, read_fds_copy;   //copy because of select, to be clean
 
   //Verifying arguments
@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]) {
 
   // Welcome msg
   printf("-------------------------\n- Talkr Client ! -\n-------------------------\n");
-  printf("Write '/quit' in order to close this session\n");
+  printf("Write '/quit' in order to close this session\n\n\n");
 
   //Preparing
   srv_sockfd = create_socket();
@@ -50,7 +50,7 @@ int main(int argc, char const *argv[]) {
   }
 
   // set nickname
-  strcpy(alias,"NO_NICKNAME_YET");
+  strcpy(alias,"NO_NICKNAME_SET");
 
   //Main Client Loop
   while(1) {
@@ -85,8 +85,10 @@ int main(int argc, char const *argv[]) {
     if(FD_ISSET(0, &read_fds_copy)){
       memset(buffer_send, 0, BUFFER_SERV_SIZE);
       fgets(buffer_send, BUFFER_SERV_SIZE, stdin);
-      do_send(srv_sockfd, buffer_send, BUFFER_SERV_SIZE);
 
+      if (sizeof(buffer_send)!=1){ // prevent empty msg
+        do_send(srv_sockfd, buffer_send, BUFFER_SERV_SIZE);
+      }
       //Quit
       if (strcmp(buffer_send, QUIT_MSG) == 0) {
         printf("Client decided to quit the chat\n");
@@ -127,7 +129,7 @@ void set_alias(char *buffer,char *alias){
   token = strtok(NULL, arrow);
   strcpy(alias, token);
   while (alias[i]!='\n') {
-     i++;
+    i++;
   }
   alias[i-1]='\0';
   alias[sizeof(alias)-1] = '\0';

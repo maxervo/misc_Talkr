@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/common.c
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon03/common.c
 stdio.h
 -
 stdlib.h
@@ -24,11 +24,11 @@ netdb.h
 netinet/in.h
 -
 common.h
-/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/common.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon03/common.h
 
-/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/common.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon03/common.h
 
-/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/server.c
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon03/server.c
 stdio.h
 -
 stdlib.h
@@ -48,9 +48,9 @@ arpa/inet.h
 time.h
 -
 common.h
-/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/common.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon03/common.h
 server.h
-/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/server.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon03/server.h
 
-/home/guillaume/Documents/Telecom/RE216/school-chat/src/jalon03/server.h
+/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/src/jalon03/server.h
 

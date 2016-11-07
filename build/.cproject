@@ -22,14 +22,12 @@
 <pathentry kind="src" path="[Source directory]"/>
 <pathentry excluding="[Source directory]/|**/CMakeFiles/" kind="out" path=""/>
 <pathentry kind="mac" name="__STDC__" path="" value="1"/>
-<pathentry kind="mac" name="__STDC_VERSION__" path="" value="201112L"/>
-<pathentry kind="mac" name="__STDC_UTF_16__" path="" value="1"/>
-<pathentry kind="mac" name="__STDC_UTF_32__" path="" value="1"/>
 <pathentry kind="mac" name="__STDC_HOSTED__" path="" value="1"/>
-<pathentry kind="mac" name="__GNUC__" path="" value="5"/>
-<pathentry kind="mac" name="__GNUC_MINOR__" path="" value="4"/>
-<pathentry kind="mac" name="__GNUC_PATCHLEVEL__" path="" value=" "/>
-<pathentry kind="mac" name="__VERSION__" path="" value="&quot;5.4.0 20160609&quot;"/>
+<pathentry kind="mac" name="__GNUC__" path="" value="4"/>
+<pathentry kind="mac" name="__GNUC_MINOR__" path="" value="8"/>
+<pathentry kind="mac" name="__GNUC_PATCHLEVEL__" path="" value="3"/>
+<pathentry kind="mac" name="__VERSION__" path="" value="&quot;4.8.3 20140911 (Red Hat 4.8.3-7)&quot;"/>
+<pathentry kind="mac" name="__GNUC_RH_RELEASE__" path="" value="7"/>
 <pathentry kind="mac" name="__ATOMIC_RELAXED" path="" value=" "/>
 <pathentry kind="mac" name="__ATOMIC_SEQ_CST" path="" value="5"/>
 <pathentry kind="mac" name="__ATOMIC_ACQUIRE" path="" value="2"/>
@@ -90,62 +88,58 @@
 <pathentry kind="mac" name="__UINT_FAST64_TYPE__" path="" value="long unsigned int"/>
 <pathentry kind="mac" name="__INTPTR_TYPE__" path="" value="long int"/>
 <pathentry kind="mac" name="__UINTPTR_TYPE__" path="" value="long unsigned int"/>
-<pathentry kind="mac" name="__has_include(STR)" path="" value="__has_include__(STR)"/>
-<pathentry kind="mac" name="__has_include_next(STR)" path="" value="__has_include_next__(STR)"/>
-<pathentry kind="mac" name="__GXX_ABI_VERSION" path="" value="1009"/>
-<pathentry kind="mac" name="__SCHAR_MAX__" path="" value="0x7f"/>
-<pathentry kind="mac" name="__SHRT_MAX__" path="" value="0x7fff"/>
-<pathentry kind="mac" name="__INT_MAX__" path="" value="0x7fffffff"/>
-<pathentry kind="mac" name="__LONG_MAX__" path="" value="0x7fffffffffffffffL"/>
-<pathentry kind="mac" name="__LONG_LONG_MAX__" path="" value="0x7fffffffffffffffLL"/>
-<pathentry kind="mac" name="__WCHAR_MAX__" path="" value="0x7fffffff"/>
+<pathentry kind="mac" name="__GXX_ABI_VERSION" path="" value="1002"/>
+<pathentry kind="mac" name="__SCHAR_MAX__" path="" value="127"/>
+<pathentry kind="mac" name="__SHRT_MAX__" path="" value="32767"/>
+<pathentry kind="mac" name="__INT_MAX__" path="" value="2147483647"/>
+<pathentry kind="mac" name="__LONG_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__LONG_LONG_MAX__" path="" value="9223372036854775807LL"/>
+<pathentry kind="mac" name="__WCHAR_MAX__" path="" value="2147483647"/>
 <pathentry kind="mac" name="__WCHAR_MIN__" path="" value="(-__WCHAR_MAX__ - 1)"/>
-<pathentry kind="mac" name="__WINT_MAX__" path="" value="0xffffffffU"/>
+<pathentry kind="mac" name="__WINT_MAX__" path="" value="4294967295U"/>
 <pathentry kind="mac" name="__WINT_MIN__" path="" value="0U"/>
-<pathentry kind="mac" name="__PTRDIFF_MAX__" path="" value="0x7fffffffffffffffL"/>
-<pathentry kind="mac" name="__SIZE_MAX__" path="" value="0xffffffffffffffffUL"/>
-<pathentry kind="mac" name="__INTMAX_MAX__" path="" value="0x7fffffffffffffffL"/>
+<pathentry kind="mac" name="__PTRDIFF_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__SIZE_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__INTMAX_MAX__" path="" value="9223372036854775807L"/>
 <pathentry kind="mac" name="__INTMAX_C(c)" path="" value="c ## L"/>
-<pathentry kind="mac" name="__UINTMAX_MAX__" path="" value="0xffffffffffffffffUL"/>
+<pathentry kind="mac" name="__UINTMAX_MAX__" path="" value="18446744073709551615UL"/>
 <pathentry kind="mac" name="__UINTMAX_C(c)" path="" value="c ## UL"/>
-<pathentry kind="mac" name="__SIG_ATOMIC_MAX__" path="" value="0x7fffffff"/>
+<pathentry kind="mac" name="__SIG_ATOMIC_MAX__" path="" value="2147483647"/>
 <pathentry kind="mac" name="__SIG_ATOMIC_MIN__" path="" value="(-__SIG_ATOMIC_MAX__ - 1)"/>
-<pathentry kind="mac" name="__INT8_MAX__" path="" value="0x7f"/>
-<pathentry kind="mac" name="__INT16_MAX__" path="" value="0x7fff"/>
-<pathentry kind="mac" name="__INT32_MAX__" path="" value="0x7fffffff"/>
-<pathentry kind="mac" name="__INT64_MAX__" path="" value="0x7fffffffffffffffL"/>
-<pathentry kind="mac" name="__UINT8_MAX__" path="" value="0xff"/>
-<pathentry kind="mac" name="__UINT16_MAX__" path="" value="0xffff"/>
-<pathentry kind="mac" name="__UINT32_MAX__" path="" value="0xffffffffU"/>
-<pathentry kind="mac" name="__UINT64_MAX__" path="" value="0xffffffffffffffffUL"/>
-<pathentry kind="mac" name="__INT_LEAST8_MAX__" path="" value="0x7f"/>
+<pathentry kind="mac" name="__INT8_MAX__" path="" value="127"/>
+<pathentry kind="mac" name="__INT16_MAX__" path="" value="32767"/>
+<pathentry kind="mac" name="__INT32_MAX__" path="" value="2147483647"/>
+<pathentry kind="mac" name="__INT64_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__UINT8_MAX__" path="" value="255"/>
+<pathentry kind="mac" name="__UINT16_MAX__" path="" value="65535"/>
+<pathentry kind="mac" name="__UINT32_MAX__" path="" value="4294967295U"/>
+<pathentry kind="mac" name="__UINT64_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__INT_LEAST8_MAX__" path="" value="127"/>
 <pathentry kind="mac" name="__INT8_C(c)" path="" value="c"/>
-<pathentry kind="mac" name="__INT_LEAST16_MAX__" path="" value="0x7fff"/>
+<pathentry kind="mac" name="__INT_LEAST16_MAX__" path="" value="32767"/>
 <pathentry kind="mac" name="__INT16_C(c)" path="" value="c"/>
-<pathentry kind="mac" name="__INT_LEAST32_MAX__" path="" value="0x7fffffff"/>
+<pathentry kind="mac" name="__INT_LEAST32_MAX__" path="" value="2147483647"/>
 <pathentry kind="mac" name="__INT32_C(c)" path="" value="c"/>
-<pathentry kind="mac" name="__INT_LEAST64_MAX__" path="" value="0x7fffffffffffffffL"/>
+<pathentry kind="mac" name="__INT_LEAST64_MAX__" path="" value="9223372036854775807L"/>
 <pathentry kind="mac" name="__INT64_C(c)" path="" value="c ## L"/>
-<pathentry kind="mac" name="__UINT_LEAST8_MAX__" path="" value="0xff"/>
+<pathentry kind="mac" name="__UINT_LEAST8_MAX__" path="" value="255"/>
 <pathentry kind="mac" name="__UINT8_C(c)" path="" value="c"/>
-<pathentry kind="mac" name="__UINT_LEAST16_MAX__" path="" value="0xffff"/>
+<pathentry kind="mac" name="__UINT_LEAST16_MAX__" path="" value="65535"/>
 <pathentry kind="mac" name="__UINT16_C(c)" path="" value="c"/>
-<pathentry kind="mac" name="__UINT_LEAST32_MAX__" path="" value="0xffffffffU"/>
+<pathentry kind="mac" name="__UINT_LEAST32_MAX__" path="" value="4294967295U"/>
 <pathentry kind="mac" name="__UINT32_C(c)" path="" value="c ## U"/>
-<pathentry kind="mac" name="__UINT_LEAST64_MAX__" path="" value="0xffffffffffffffffUL"/>
+<pathentry kind="mac" name="__UINT_LEAST64_MAX__" path="" value="18446744073709551615UL"/>
 <pathentry kind="mac" name="__UINT64_C(c)" path="" value="c ## UL"/>
-<pathentry kind="mac" name="__INT_FAST8_MAX__" path="" value="0x7f"/>
-<pathentry kind="mac" name="__INT_FAST16_MAX__" path="" value="0x7fffffffffffffffL"/>
-<pathentry kind="mac" name="__INT_FAST32_MAX__" path="" value="0x7fffffffffffffffL"/>
-<pathentry kind="mac" name="__INT_FAST64_MAX__" path="" value="0x7fffffffffffffffL"/>
-<pathentry kind="mac" name="__UINT_FAST8_MAX__" path="" value="0xff"/>
-<pathentry kind="mac" name="__UINT_FAST16_MAX__" path="" value="0xffffffffffffffffUL"/>
-<pathentry kind="mac" name="__UINT_FAST32_MAX__" path="" value="0xffffffffffffffffUL"/>
-<pathentry kind="mac" name="__UINT_FAST64_MAX__" path="" value="0xffffffffffffffffUL"/>
-<pathentry kind="mac" name="__INTPTR_MAX__" path="" value="0x7fffffffffffffffL"/>
-<pathentry kind="mac" name="__UINTPTR_MAX__" path="" value="0xffffffffffffffffUL"/>
-<pathentry kind="mac" name="__GCC_IEC_559" path="" value="2"/>
-<pathentry kind="mac" name="__GCC_IEC_559_COMPLEX" path="" value="2"/>
+<pathentry kind="mac" name="__INT_FAST8_MAX__" path="" value="127"/>
+<pathentry kind="mac" name="__INT_FAST16_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__INT_FAST32_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__INT_FAST64_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__UINT_FAST8_MAX__" path="" value="255"/>
+<pathentry kind="mac" name="__UINT_FAST16_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__UINT_FAST32_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__UINT_FAST64_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__INTPTR_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__UINTPTR_MAX__" path="" value="18446744073709551615UL"/>
 <pathentry kind="mac" name="__FLT_EVAL_METHOD__" path="" value=" "/>
 <pathentry kind="mac" name="__DEC_EVAL_METHOD__" path="" value="2"/>
 <pathentry kind="mac" name="__FLT_RADIX__" path="" value="2"/>
@@ -214,7 +208,7 @@
 <pathentry kind="mac" name="__DEC128_SUBNORMAL_MIN__" path="" value="0.000000000000000000000000000000001E-6143DL"/>
 <pathentry kind="mac" name="__REGISTER_PREFIX__" path="" value=" "/>
 <pathentry kind="mac" name="__USER_LABEL_PREFIX__" path="" value=" "/>
-<pathentry kind="mac" name="__GNUC_STDC_INLINE__" path="" value="1"/>
+<pathentry kind="mac" name="__GNUC_GNU_INLINE__" path="" value="1"/>
 <pathentry kind="mac" name="__NO_INLINE__" path="" value="1"/>
 <pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1" path="" value="1"/>
 <pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2" path="" value="1"/>
@@ -233,7 +227,6 @@
 <pathentry kind="mac" name="__GCC_ATOMIC_POINTER_LOCK_FREE" path="" value="2"/>
 <pathentry kind="mac" name="__GCC_HAVE_DWARF2_CFI_ASM" path="" value="1"/>
 <pathentry kind="mac" name="__PRAGMA_REDEFINE_EXTNAME" path="" value="1"/>
-<pathentry kind="mac" name="__SSP_STRONG__" path="" value="3"/>
 <pathentry kind="mac" name="__SIZEOF_INT128__" path="" value="16"/>
 <pathentry kind="mac" name="__SIZEOF_WCHAR_T__" path="" value="4"/>
 <pathentry kind="mac" name="__SIZEOF_WINT_T__" path="" value="4"/>
@@ -242,8 +235,6 @@
 <pathentry kind="mac" name="__amd64__" path="" value="1"/>
 <pathentry kind="mac" name="__x86_64" path="" value="1"/>
 <pathentry kind="mac" name="__x86_64__" path="" value="1"/>
-<pathentry kind="mac" name="__SIZEOF_FLOAT80__" path="" value="16"/>
-<pathentry kind="mac" name="__SIZEOF_FLOAT128__" path="" value="16"/>
 <pathentry kind="mac" name="__ATOMIC_HLE_ACQUIRE" path="" value="65536"/>
 <pathentry kind="mac" name="__ATOMIC_HLE_RELEASE" path="" value="131072"/>
 <pathentry kind="mac" name="__k8" path="" value="1"/>
@@ -267,338 +258,553 @@
 <pathentry kind="mac" name="_STDC_PREDEF_H" path="" value="1"/>
 <pathentry kind="mac" name="__STDC_IEC_559__" path="" value="1"/>
 <pathentry kind="mac" name="__STDC_IEC_559_COMPLEX__" path="" value="1"/>
-<pathentry kind="mac" name="__STDC_ISO_10646__" path="" value="201505L"/>
+<pathentry kind="mac" name="__STDC_ISO_10646__" path="" value="201103L"/>
 <pathentry kind="mac" name="__STDC_NO_THREADS__" path="" value="1"/>
 <pathentry kind="mac" name="__cplusplus" path="" value="199711L"/>
-<pathentry kind="mac" name="__GNUG__" path="" value="5"/>
+<pathentry kind="mac" name="__GNUG__" path="" value="4"/>
 <pathentry kind="mac" name="__GXX_WEAK__" path="" value="1"/>
 <pathentry kind="mac" name="__DEPRECATED" path="" value="1"/>
 <pathentry kind="mac" name="__GXX_RTTI" path="" value="1"/>
-<pathentry kind="mac" name="__cpp_rtti" path="" value="199711"/>
-<pathentry kind="mac" name="__cpp_binary_literals" path="" value="201304"/>
-<pathentry kind="mac" name="__cpp_runtime_arrays" path="" value="198712"/>
 <pathentry kind="mac" name="__EXCEPTIONS" path="" value="1"/>
-<pathentry kind="mac" name="__cpp_exceptions" path="" value="199711"/>
-<pathentry kind="mac" name="__GLIBCXX_TYPE_INT_N_0" path="" value="__int128"/>
-<pathentry kind="mac" name="__GLIBCXX_BITSIZE_INT_N_0" path="" value="128"/>
-<pathentry kind="mac" name="__GNUC_GNU_INLINE__" path="" value="1"/>
 <pathentry kind="mac" name="_GNU_SOURCE" path="" value="1"/>
-<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/5/include" kind="inc" path="" system="true"/>
+<pathentry include="/usr/lib/gcc/x86_64-redhat-linux/4.8.3/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/local/include" kind="inc" path="" system="true"/>
-<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" kind="inc" path="" system="true"/>
-<pathentry include="/usr/include/x86_64-linux-gnu" kind="inc" path="" system="true"/>
 <pathentry include="/usr/include" kind="inc" path="" system="true"/>
-<pathentry include="/usr/include/c++/5" kind="inc" path="" system="true"/>
-<pathentry include="/usr/include/x86_64-linux-gnu/c++/5" kind="inc" path="" system="true"/>
-<pathentry include="/usr/include/c++/5/backward" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/c++/4.8.3" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/c++/4.8.3/x86_64-redhat-linux" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/c++/4.8.3/backward" kind="inc" path="" system="true"/>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 <buildTargets>
-<target name=": edit_cache" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-j8</buildArguments>
-<buildTarget>edit_cache</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
 <target name=": rebuild_cache" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>rebuild_cache</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[exe] RE216_JALON01_SERVER" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON01_SERVER</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[exe] RE216_JALON01_SERVER/fast" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON01_SERVER/fast</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="Build" path="[Targets]/[exe] RE216_JALON01_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
-<buildTarget>RE216_JALON01_SERVER</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="Clean" path="[Targets]/[exe] RE216_JALON01_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon01" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON01_SERVER.dir/cmake_clean.cmake"</buildArguments>
-<buildTarget></buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
 <target name="[exe] RE216_JALON01_CLIENT" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON01_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] RE216_JALON01_CLIENT/fast" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON01_CLIENT/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Build" path="[Targets]/[exe] RE216_JALON01_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
 <buildTarget>RE216_JALON01_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Clean" path="[Targets]/[exe] RE216_JALON01_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 <buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon01" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON01_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon01" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON01_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON01_SERVER" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON01_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON01_SERVER/fast" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON01_SERVER/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] RE216_JALON01_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
+<buildTarget>RE216_JALON01_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] RE216_JALON01_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon01" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON01_SERVER.dir/cmake_clean.cmake"</buildArguments>
 <buildTarget></buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[exe] RE216_JALON02_SERVER" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] client.c.o" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON02_SERVER</buildTarget>
+<buildTarget>client.c.o</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[exe] RE216_JALON02_SERVER/fast" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] client.c.i" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON02_SERVER/fast</buildTarget>
+<buildTarget>client.c.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="Build" path="[Targets]/[exe] RE216_JALON02_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
-<buildTarget>RE216_JALON02_SERVER</buildTarget>
+<target name="[to asm] client.c.s" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>client.c.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="Clean" path="[Targets]/[exe] RE216_JALON02_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon02" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON02_SERVER.dir/cmake_clean.cmake"</buildArguments>
-<buildTarget></buildTarget>
+<target name="[obj] server.c.o" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] server.c.i" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] server.c.s" path="jalon01" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] RE216_JALON02_CLIENT" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON02_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] RE216_JALON02_CLIENT/fast" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON02_CLIENT/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Build" path="[Targets]/[exe] RE216_JALON02_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
 <buildTarget>RE216_JALON02_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Clean" path="[Targets]/[exe] RE216_JALON02_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 <buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon02" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON02_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon02" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON02_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON02_SERVER" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON02_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON02_SERVER/fast" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON02_SERVER/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] RE216_JALON02_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
+<buildTarget>RE216_JALON02_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] RE216_JALON02_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon02" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON02_SERVER.dir/cmake_clean.cmake"</buildArguments>
 <buildTarget></buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[exe] RE216_JALON03_SERVER" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] client.c.o" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON03_SERVER</buildTarget>
+<buildTarget>client.c.o</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[exe] RE216_JALON03_SERVER/fast" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] client.c.i" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON03_SERVER/fast</buildTarget>
+<buildTarget>client.c.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="Build" path="[Targets]/[exe] RE216_JALON03_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
-<buildTarget>RE216_JALON03_SERVER</buildTarget>
+<target name="[to asm] client.c.s" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>client.c.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="Clean" path="[Targets]/[exe] RE216_JALON03_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon03" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON03_SERVER.dir/cmake_clean.cmake"</buildArguments>
-<buildTarget></buildTarget>
+<target name="[obj] common.c.o" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] common.c.i" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] common.c.s" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] server.c.o" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] server.c.i" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] server.c.s" path="jalon02" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] RE216_JALON03_CLIENT" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON03_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] RE216_JALON03_CLIENT/fast" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON03_CLIENT/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Build" path="[Targets]/[exe] RE216_JALON03_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
 <buildTarget>RE216_JALON03_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Clean" path="[Targets]/[exe] RE216_JALON03_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 <buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon03" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON03_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon03" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON03_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON03_SERVER" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON03_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON03_SERVER/fast" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON03_SERVER/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] RE216_JALON03_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
+<buildTarget>RE216_JALON03_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] RE216_JALON03_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon03" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON03_SERVER.dir/cmake_clean.cmake"</buildArguments>
 <buildTarget></buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[exe] RE216_JALON04_SERVER" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] client.c.o" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON04_SERVER</buildTarget>
+<buildTarget>client.c.o</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[exe] RE216_JALON04_SERVER/fast" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] client.c.i" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
-<buildTarget>RE216_JALON04_SERVER/fast</buildTarget>
+<buildTarget>client.c.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="Build" path="[Targets]/[exe] RE216_JALON04_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
-<buildTarget>RE216_JALON04_SERVER</buildTarget>
+<target name="[to asm] client.c.s" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>client.c.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="Clean" path="[Targets]/[exe] RE216_JALON04_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon04" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON04_SERVER.dir/cmake_clean.cmake"</buildArguments>
-<buildTarget></buildTarget>
+<target name="[obj] common.c.o" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] common.c.i" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] common.c.s" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] server.c.o" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] server.c.i" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] server.c.s" path="jalon03" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] RE216_JALON04_CLIENT" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON04_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] RE216_JALON04_CLIENT/fast" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>RE216_JALON04_CLIENT/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Build" path="[Targets]/[exe] RE216_JALON04_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments>-C "/home/guillaume/Documents/Telecom/RE216/school-chat/build" -j8</buildArguments>
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
 <buildTarget>RE216_JALON04_CLIENT</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="Clean" path="[Targets]/[exe] RE216_JALON04_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 <buildCommand>/usr/bin/cmake</buildCommand>
-<buildArguments>-E chdir "/home/guillaume/Documents/Telecom/RE216/school-chat/build/jalon04" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON04_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon04" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON04_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON04_SERVER" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON04_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] RE216_JALON04_SERVER/fast" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>RE216_JALON04_SERVER/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] RE216_JALON04_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-C "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build" -j8</buildArguments>
+<buildTarget>RE216_JALON04_SERVER</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] RE216_JALON04_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/net/malt/t/ggrijol/personnel/S7/RE216/school-chat/build/jalon04" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON04_SERVER.dir/cmake_clean.cmake"</buildArguments>
 <buildTarget></buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>/usr/bin/gmake</buildCommand>
 <buildArguments>-j8</buildArguments>
 <buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] client.c.o" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>client.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] client.c.i" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>client.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] client.c.s" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>client.c.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] common.c.o" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] common.c.i" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] common.c.s" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>common.c.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] server.c.o" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] server.c.i" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] server.c.s" path="jalon04" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/gmake</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>server.c.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
@@ -622,7 +828,7 @@
 <parser enabled="true"/>
 </buildOutputProvider>
 <scannerInfoProvider id="makefileGenerator">
-<runAction arguments="-f ${project_name}_scd.mk" command="/usr/bin/make" useDefault="true"/>
+<runAction arguments="-f ${project_name}_scd.mk" command="/usr/bin/gmake" useDefault="true"/>
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
