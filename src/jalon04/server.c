@@ -116,8 +116,8 @@ int handle(struct Client *client, struct Client *cli_base) {
   memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
   const char space[2] = " ";
-  char *token_cmd = NULL; // can be /quit /nick /whois /who
-  char *token_arg = NULL; // for /nick & /whois
+  char token_cmd[CMD_SIZE] = {'\0'}; // can be /quit /nick /whois /who
+  char token_arg[ARG_SIZE] = {'\0'}; // for /nick & /whois
   char token_data[BUFFER_SERV_SIZE] = {'\0'};
 
   //Abrupt close by client
@@ -126,7 +126,10 @@ int handle(struct Client *client, struct Client *cli_base) {
     return CLOSE_COMMUNICATION;
   }
   else { // extract the first word of the msg receive
+
+    printf("BEFORE\n");
     parse_request(buffer_serv, token_cmd, token_arg, token_data);
+    printf("AFTER %s and %s and %s\n", token_cmd, token_arg, token_data);
     /*
     strncpy(buffer_serv_copy, buffer_serv, BUFFER_SERV_SIZE);
     token_cmd = strtok(buffer_serv_copy, space);   //can be /quit /nick /whois /who
@@ -158,7 +161,7 @@ int handle(struct Client *client, struct Client *cli_base) {
       set_nickname(client, token_arg, cli_base);
     }
     else {
-      printf("Alias incorrect\n");  //non existent or too long
+      printf("Incorrect alias\n");  //non existent or too long
       inform_alias_incorrect(sockfd);
     }
 
@@ -196,7 +199,7 @@ int handle(struct Client *client, struct Client *cli_base) {
   }
 
   // Broadcast
-  else if(strcmp(token_cmd, BRAODCAST_MSG) == 0) {
+  else if(strcmp(token_cmd, BROADCAST_MSG) == 0) {
     printf("Broadcast msg received\n");
     broadcast(sockfd, cli_base, buffer_cli);
     return KEEP_COMMUNICATION;
@@ -294,7 +297,7 @@ void refuse(int sockfd) {
 void set_nickname(struct Client *client, char *alias, struct Client *cli_base){
   printf("Set nickname : %s\n", alias);
 
-  if (check_nickname(alias, cli_base)) {
+  if (!presence_alias(alias, cli_base)) {
     strncpy(client->alias, alias, ALIAS_SIZE);
     inform_nick_set(client->fd, alias);
     printf("Nickname set\n");
@@ -314,13 +317,13 @@ void inform_nick_used(int sockfd) {
   do_send(sockfd, buffer, BUFFER_CLI_SIZE);
 }
 
-int check_nickname(char *alias, struct Client *cli_base) {
+int presence_alias(char *alias, struct Client *cli_base) {
   for(int i=0; i < MAX_NO_CLI; i++) {
     if(strcmp(alias, cli_base[i].alias) == 0) {
-      return 0;
+      return 1;
     }
   }
-  return 1;
+  return 0;
 }
 
 void reset_client_slot(struct Client *client) {
@@ -373,7 +376,7 @@ void inform_whois(struct Client *client, char *alias, struct Client *cli_base) {
 
   //Searching client by alias
   for (int i = 0; i < MAX_NO_CLI; i++) {
-    if (strcmp(cli_base[i].alias, alias) == 0 ) {
+    if (strcmp(cli_base[i].alias, alias) == 0 ) {       //TODO do with snprintf
       strcat(buffer, "[SERVER] User ");
       strcat(buffer, cli_base[i].alias);
       strcat(buffer, " connected since ");
@@ -433,13 +436,25 @@ void broadcast(int sockfd,struct Client *cli_base, char*buffer){
 
 }
 
-void unicast(int sockfd, struct Client *cli_base, char *buffer, char * alias){
-  int i;
+void unicast(int sockfd, struct Client *cli_base, char *msg, char *alias_receiver) {
 
-  char buffer_cli[BUFFER_CLI_SIZE]; // Client buffer is bigger than server buffer
-  const char space[2] = "-";
+  char buffer_cli[BUFFER_CLI_SIZE] = {'\0'}; // Client buffer is bigger than server buffer
+  char* alias_sender = get_alias_from_fd(sockfd, cli_base);
+  int fd_receiver = get_fd_from_alias(alias_receiver, cli_base);
+
+  snprintf(buffer_cli, BUFFER_CLI_SIZE, "[%s] -> %s", alias_sender, msg);
+
+  if (presence_alias(alias_receiver, cli_base)) {
+    do_send(fd_receiver, buffer_cli, BUFFER_CLI_SIZE);
+  }
+  else {
+    inform_alias_incorrect(sockfd);
+  }
+
+
+  //const char space[2] = "-";
   //char *token;
-  memset(buffer_cli, 0, BUFFER_CLI_SIZE);
+  //memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
   /*
   // this part allow to know who send the message and what type the message is (broadcast)
@@ -448,16 +463,17 @@ void unicast(int sockfd, struct Client *cli_base, char *buffer, char * alias){
   strcat(buffer_cli, "] [UNICAST] :");
 
   /* get the 2 first token to take of */
-  token = strtok(buffer, space); // token = "/msgall" here
-  token = strtok(NULL, space); // token = nickname
+  //token = strtok(buffer, space); // token = "/msgall" here
+  //token = strtok(NULL, space); // token = nickname
 
   /* walk through other tokens */
+  /*
   while( token != NULL ){
     token = strtok(NULL, space);
     strcat(buffer_cli,token);
-  }
+  }*/
 
-
+  /*
   printf("L'alias demandé est : %s\n", alias);
   for (i=0;i<MAX_NO_CLI;i++){
     if((strcmp(alias,cli_base[i].alias)==0) && cli_base[i].fd!=sockfd ){
@@ -466,43 +482,75 @@ void unicast(int sockfd, struct Client *cli_base, char *buffer, char * alias){
       do_send(cli_base[i].fd, buffer_cli, BUFFER_CLI_SIZE);
       break;
     }
-  }
+  }*/
 }
 
 void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *token_data) {
   char buffer_serv_copy[BUFFER_SERV_SIZE];            // to extract token, we work only on a copy because strtok modifies the input
   memset(buffer_serv_copy, 0, BUFFER_SERV_SIZE);
   strncpy(buffer_serv_copy, buffer_serv, BUFFER_SERV_SIZE);   //to be clean when extracting tokens
-  char token = strtok(buffer_serv_copy, space);   //can be /quit /nick /whois /who
+  const char space[2] = " ";
+  char* token = strtok(buffer_serv_copy, space);   //can be /quit /nick /whois /who  /msgall /msg
 
   //QUIT or WHO
   if ( (strcmp(token, QUIT_MSG) == 0) || (strcmp(token, WHOIS_MSG) == 0) ) {
-    token_cmd = token;
+    strncat(token_cmd, token, CMD_SIZE);
+    return;
+  }
+
+  //WHOIS or NICK
+  else if(strcmp(token, WHOIS_MSG) == 0 || strcmp(token, NICK_MSG) == 0) {
+    strncat(token_cmd, token, CMD_SIZE);
+    strncat(token_arg, strtok(NULL, space), ARG_SIZE);
+
     return;
   }
 
   //MSGALL
   else if(strcmp(token, BROADCAST_MSG) == 0) {
-    token_cmd = token;
+    strncat(token_cmd, token, CMD_SIZE);
 
     // Walk through the data
     while( token != NULL ){
       token = strtok(NULL, space);
-      strcat(token_data,token);
+      if (token != NULL) {strncat(token_data, token, BUFFER_CLI_SIZE);}
     }
 
     return;
   }
 
-  //WHOIS
-  else if(strcmp(token, WHOIS_MSG) == 0) {
-    token_cmd = token;
-    token_arg = strtok(NULL, space);
+  //UNICAST MSG
+  else if(strcmp(token, UNICAST_MSG) == 0) {
+    strncat(token_cmd, token, CMD_SIZE);
+    strncat(token_arg, strtok(NULL, space), ARG_SIZE);
+
+    // Walk through the data
+    while( token != NULL ){
+      printf("before token\n");
+      token = strtok(NULL, space);
+      printf("It's %s\n", token);
+      if (token != NULL) {strncat(token_data, token, BUFFER_CLI_SIZE);}
+    }
 
     return;
   }
 
+}
 
+char *get_alias_from_fd(int fd, struct Client *cli_base) {       //For production purpose and better design, hash tables can be implemented to have fd as index
+  for(int i=0; i < MAX_NO_CLI; i++) {
+    if(fd == cli_base[i].fd) {
+      return cli_base[i].alias;
+    }
+  }
+  return NULL;
+}
 
-
+int get_fd_from_alias(char *alias, struct Client *cli_base) {
+  for(int i=0; i < MAX_NO_CLI; i++) {
+    if(strcmp(alias, cli_base[i].alias) == 0) {
+      return cli_base[i].fd;
+    }
+  }
+  return EMPTY_SLOT;
 }

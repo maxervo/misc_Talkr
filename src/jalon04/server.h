@@ -29,7 +29,9 @@ void init_client_base(struct Client *cli_base);
 void set_nickname(struct Client *client, char *alias, struct Client *cli_base);
 void inform_nick_set(int sockfd,char*alias);
 void inform_nick_demand(int sockfd);
-int check_nickname(char *alias, struct Client *cli_base);
+int presence_alias(char *alias, struct Client *cli_base);
+char *get_alias_from_fd(int fd, struct Client *cli_base);
+int get_fd_from_alias(char *alias, struct Client *cli_base);
 void inform_nick_used(int sockfd);
 void reset_client_slot(struct Client *client);
 void inform_who(int sockfd,struct Client *cli_base);
@@ -37,7 +39,7 @@ void set_client(struct Client* client, int new_sockfd, struct sockaddr_in cli_ad
 void inform_whois(struct Client *client, char *alias, struct Client *cli_base);
 void inform_alias_incorrect(int sockfd);
 void broadcast(int sockfd,struct Client *cli_base, char*buffer);
-void unicast(int sockfd,struct Client *cli_base, char*buffer,char * alias);
-
+void unicast(int sockfd,struct Client *cli_base, char *msg, char* alias_receiver);
+void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *token_data);
 
 #endif
