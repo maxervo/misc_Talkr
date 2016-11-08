@@ -23,6 +23,10 @@ int main(int argc, char* argv[]) {
   int cli_len = sizeof(cli_addr);
   int port_no;
 
+  struct timeval tv;    //clean select
+  tv.tv_sec = 0;
+  tv.tv_usec = 0;
+
   //Check Usage
   if (argc != 2) {
     fprintf(stderr, "Usage: RE216_SERVER port\n");
@@ -52,54 +56,52 @@ int main(int argc, char* argv[]) {
     //Workspace fd set preparation
     FD_ZERO(&read_fds);
     FD_SET(master_sockfd, &read_fds); //Add listening socket
-    struct timeval tv;
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
+
     max_fd = master_sockfd;
     int i;
     for (i = 0; i < MAX_NO_CLI; i++) {  //Add all "already connected" client sockets
-    if (cli_base[i].fd > EMPTY_SLOT) {  //Considering "non-error" slots (thus non negative), and "non-empty" slots
-    FD_SET(cli_base[i].fd, &read_fds);
-    max_fd = (cli_base[i].fd > max_fd)? cli_base[i].fd : max_fd;
-  }
-}
+      if (cli_base[i].fd > EMPTY_SLOT) {  //Considering "non-error" slots (thus non negative), and "non-empty" slots
+        FD_SET(cli_base[i].fd, &read_fds);
+        max_fd = (cli_base[i].fd > max_fd)? cli_base[i].fd : max_fd;
+      }
+    }
 
-//Activity monitoring
-read_fds_copy = read_fds;
-if(select(max_fd + 1, &read_fds_copy, NULL, NULL, &tv) == -1) {
-  error("Error - select");
-}
+    //Activity monitoring
+    read_fds_copy = read_fds;
+    if(select(max_fd + 1, &read_fds_copy, NULL, NULL, &tv) == -1) {
+      error("Error - select");
+    }
 
-//New connection
-if (FD_ISSET(master_sockfd, &read_fds_copy)) {
-  new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
+    //New connection
+    if (FD_ISSET(master_sockfd, &read_fds_copy)) {
+      new_sockfd = accept(master_sockfd, (struct sockaddr *) &cli_addr, &cli_len);
 
-  if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
-    printf("New connection! Client accepted\n\n");
-    set_client(&cli_base[index_available], new_sockfd, cli_addr);
-    welcome(new_sockfd); //Sending welcome msg
-  }
-  else {  //No more slots available, limit reached
-    printf("New connection! Client refused\n\n");
-    refuse(new_sockfd);   //Sending error msg
-    close(new_sockfd);
-  }
-}
+      if ( (index_available = slot_available(cli_base)) != SLOT_UNAVAILABLE ) {
+        printf("New connection! Client accepted\n\n");
+        set_client(&cli_base[index_available], new_sockfd, cli_addr);
+        welcome(new_sockfd); //Sending welcome msg
+      }
+      else {  //No more slots available, limit reached
+        printf("New connection! Client refused\n\n");
+        refuse(new_sockfd);   //Sending error msg
+        close(new_sockfd);
+      }
+    }
 
-//Client already connected : IO
-else {
-  int i;
-  for (i = 0; i < MAX_NO_CLI; i++) {
-    if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
-      if ( handle(&cli_base[i], cli_base) == CLOSE_COMMUNICATION) {
-        reset_client_slot(cli_base+i);
+    //Client already connected : IO
+    else {
+      int i;
+      for (i = 0; i < MAX_NO_CLI; i++) {
+        if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
+          if ( handle(&cli_base[i], cli_base) == CLOSE_COMMUNICATION) {
+            reset_client_slot(cli_base+i);
+          }
+        }
       }
     }
   }
-}
-}
 
-return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }
 
 int handle(struct Client *client, struct Client *cli_base) {
@@ -108,22 +110,34 @@ int handle(struct Client *client, struct Client *cli_base) {
   strncpy(alias,client->alias,ALIAS_SIZE);
   char buffer_serv[BUFFER_SERV_SIZE];
   memset(buffer_serv, 0, BUFFER_SERV_SIZE);
-  char buffer_serv_copy[BUFFER_SERV_SIZE];            // to extract token, we work only on a copy because strtok modifies the input
-  memset(buffer_serv_copy, 0, BUFFER_SERV_SIZE);
+  //char buffer_serv_copy[BUFFER_SERV_SIZE];            // to extract token, we work only on a copy because strtok modifies the input
+  //memset(buffer_serv_copy, 0, BUFFER_SERV_SIZE);
+  char buffer_cli[BUFFER_CLI_SIZE];
+  memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
   const char space[2] = " ";
-  char * token_cmd = NULL; // can be /quit /nick /whois /who
+  char *token_cmd = NULL; // can be /quit /nick /whois /who
   char *token_arg = NULL; // for /nick & /whois
+  char token_data[BUFFER_SERV_SIZE] = {'\0'};
 
   //Abrupt close by client
   if( do_recv(sockfd, buffer_serv, BUFFER_SERV_SIZE) == CLOSE_ABRUPT ) {
     printf("Connection closed abruptly by remote peer\n");
     return CLOSE_COMMUNICATION;
   }
-  else{ // extract the first word of the msg receive
+  else { // extract the first word of the msg receive
+    parse_request(buffer_serv, token_cmd, token_arg, token_data);
+    /*
     strncpy(buffer_serv_copy, buffer_serv, BUFFER_SERV_SIZE);
     token_cmd = strtok(buffer_serv_copy, space);   //can be /quit /nick /whois /who
-    token_arg = strtok(NULL, space);
+    token_arg = strtok(NULL, space);*/
+
+    /*
+    // Walk through the leftovers
+    while( token != NULL ){
+      token = strtok(NULL, space);
+      strcat(buffer_cli,token);
+    }*/
   }
 
   //Quit
@@ -182,22 +196,22 @@ int handle(struct Client *client, struct Client *cli_base) {
   }
 
   // Broadcast
-  else if(strcmp(token_cmd,BRAODCAST_MSG) == 0) {
+  else if(strcmp(token_cmd, BRAODCAST_MSG) == 0) {
     printf("Broadcast msg received\n");
     broadcast(sockfd, cli_base, buffer_cli);
     return KEEP_COMMUNICATION;
   }
 
-  // unicast
+  // Unicast
   else if(strcmp(token_cmd,UNICAST_MSG) == 0) {
     printf("Unicast msg received\n");
-    unicast(sockfd, cli_base, buffer_cli,token_arg);
+    unicast(sockfd, cli_base, buffer_serv, token_arg);
     return KEEP_COMMUNICATION;
   }
 
-  //Simple msg
+  //Simple msg : TODO for chatrooms
   else {
-    strcpy(buffer_cli,buffer_serv,BUFFER_SERV_SIZE);
+    strncpy(buffer_cli, buffer_serv, BUFFER_SERV_SIZE);
     printf("Sending to client with fd [%i]: %s", sockfd, buffer_cli);
     do_send(sockfd, buffer_cli, BUFFER_CLI_SIZE);
     printf("Echo sent\n\n");
@@ -371,7 +385,7 @@ void inform_whois(struct Client *client, char *alias, struct Client *cli_base) {
       strcat(buffer, str_port);
       strcat(buffer, "\n");
 
-      do_send(client->fd, buffer, BUFFER_SIZE);
+      do_send(client->fd, buffer, BUFFER_CLI_SIZE);
       return;
     }
   }
@@ -397,7 +411,7 @@ void broadcast(int sockfd,struct Client *cli_base, char*buffer){
   char *token;
   memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
-  // this part allow to know who send the message and what type the message is (broadcast)
+  // Knowing who sent the message and what type the message is (broadcast)
   strcat(buffer_cli, "[");
   strcat(buffer_cli, "YourNickname");
   strcat(buffer_cli, "] [BRAODCAST] :");
@@ -412,22 +426,22 @@ void broadcast(int sockfd,struct Client *cli_base, char*buffer){
   }
 
   for (int i=0;i<MAX_NO_CLI;i++){
-    if(cli_base[i].fd!=0 && cli_base[i].fd!=sockfd ){
+    if(cli_base[i].fd != EMPTY_SLOT && cli_base[i].fd != sockfd ){
       do_send(cli_base[i].fd, buffer_cli, BUFFER_CLI_SIZE);
     }
   }
 
-  return(0);
 }
 
-void unicast(int sockfd,struct Client *cli_base, char*buffer,char * alias){
+void unicast(int sockfd, struct Client *cli_base, char *buffer, char * alias){
   int i;
-  // Client buffer is higher than server buffer
-  char buffer_cli[BUFFER_CLI_SIZE];
+
+  char buffer_cli[BUFFER_CLI_SIZE]; // Client buffer is bigger than server buffer
   const char space[2] = "-";
-  char *token;
+  //char *token;
   memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
+  /*
   // this part allow to know who send the message and what type the message is (broadcast)
   strcat(buffer_cli, "[");
   strcat(buffer_cli, "YourNickname");
@@ -453,4 +467,42 @@ void unicast(int sockfd,struct Client *cli_base, char*buffer,char * alias){
       break;
     }
   }
+}
+
+void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *token_data) {
+  char buffer_serv_copy[BUFFER_SERV_SIZE];            // to extract token, we work only on a copy because strtok modifies the input
+  memset(buffer_serv_copy, 0, BUFFER_SERV_SIZE);
+  strncpy(buffer_serv_copy, buffer_serv, BUFFER_SERV_SIZE);   //to be clean when extracting tokens
+  char token = strtok(buffer_serv_copy, space);   //can be /quit /nick /whois /who
+
+  //QUIT or WHO
+  if ( (strcmp(token, QUIT_MSG) == 0) || (strcmp(token, WHOIS_MSG) == 0) ) {
+    token_cmd = token;
+    return;
+  }
+
+  //MSGALL
+  else if(strcmp(token, BROADCAST_MSG) == 0) {
+    token_cmd = token;
+
+    // Walk through the data
+    while( token != NULL ){
+      token = strtok(NULL, space);
+      strcat(token_data,token);
+    }
+
+    return;
+  }
+
+  //WHOIS
+  else if(strcmp(token, WHOIS_MSG) == 0) {
+    token_cmd = token;
+    token_arg = strtok(NULL, space);
+
+    return;
+  }
+
+
+
+
 }
