@@ -15,6 +15,7 @@ int main(int argc, char* argv[]) {
   struct sockaddr_in serv_addr, cli_addr;
   int master_sockfd;
   struct Client cli_base[MAX_NO_CLI];   //array chosen instead of lists because: max size known
+  struct Channel channel_base[MAX_NO_CHANNEL];
   int new_sockfd;
   fd_set read_fds, read_fds_copy;   //copy because of select, to be clean
   int max_fd;
@@ -39,8 +40,9 @@ int main(int argc, char* argv[]) {
   init_serv_address(&serv_addr, port_no);
   do_bind(master_sockfd, &serv_addr);
 
-  //Client sockets
+  //Init bases
   init_client_base(cli_base);
+  init_channel_base(channel_base);
 
   //Listen
   if(listen(master_sockfd, MAX_NUM_QUEUE) < 0) {
@@ -93,7 +95,7 @@ int main(int argc, char* argv[]) {
       int i;
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
-          if ( handle(&cli_base[i], cli_base) == CLOSE_COMMUNICATION) {
+          if ( handle(&cli_base[i], cli_base, channel_base) == CLOSE_COMMUNICATION) {
             reset_client_slot(cli_base+i);
           }
         }
@@ -104,7 +106,7 @@ int main(int argc, char* argv[]) {
   return EXIT_SUCCESS;
 }
 
-int handle(struct Client *client, struct Client *cli_base) {
+int handle(struct Client *client, struct Client *cli_base, struct Channel *channel_base) {
   int sockfd = client->fd;
   char alias[ALIAS_SIZE];
   strncpy(alias,client->alias,ALIAS_SIZE);
@@ -201,14 +203,22 @@ int handle(struct Client *client, struct Client *cli_base) {
   // Broadcast
   else if(strcmp(token_cmd, BROADCAST_MSG) == 0) {
     printf("Broadcast msg received\n");
-    broadcast(sockfd, cli_base, buffer_cli);
+    broadcast(sockfd, cli_base, token_data);
     return KEEP_COMMUNICATION;
   }
 
   // Unicast
   else if(strcmp(token_cmd,UNICAST_MSG) == 0) {
     printf("Unicast msg received\n");
-    unicast(sockfd, cli_base, buffer_serv, token_arg);
+    unicast(sockfd, cli_base, token_data, token_arg);
+    return KEEP_COMMUNICATION;
+  }
+
+  // Create channel
+  else if(strcmp(token_cmd, CREATE_CHANNEL_MSG) == 0) {
+    printf("Create channel msg received\n");
+    create_channel(sockfd, token_arg, channel_base);
+    //unicast(sockfd, cli_base, token_data, token_arg);
     return KEEP_COMMUNICATION;
   }
 
@@ -231,7 +241,19 @@ void init_client_base(struct Client *cli_base) {
     cli_base[i].con_time[0] = '\0';
     cli_base[i].ip[0] = '\0';
     cli_base[i].port = 0;
-    cli_base[i].room[0] = '\0';
+    cli_base[i].id_channel = NO_CHANNEL_YET;
+  }
+}
+
+void init_channel_base(struct Channel *channel_base) {
+  for(int i=0; i < MAX_NO_CHANNEL; i++) {
+    //name
+    channel_base[i].name[0] = '\0';
+
+    //users by channel
+    for (int j = 0; j < MAX_USERS_CHANNEL; j++) {
+      channel_base[i].users_fd[j] = EMPTY_SLOT;
+    }
   }
 }
 
@@ -295,16 +317,17 @@ void refuse(int sockfd) {
 }
 
 void set_nickname(struct Client *client, char *alias, struct Client *cli_base){
-  printf("Set nickname : %s\n", alias);
 
-  if (!presence_alias(alias, cli_base)) {
+  //security
+  if (presence_alias(alias, cli_base) || strlen(alias) == 0) {
+    printf("Nickname already used by another client or null alias\n");
+    inform_nick_used(client->fd);
+  }
+  else {
+    printf("Set nickname : %s\n", alias);
     strncpy(client->alias, alias, ALIAS_SIZE);
     inform_nick_set(client->fd, alias);
     printf("Nickname set\n");
-  }
-  else {
-    printf("Nickname already used by another client\n");
-    inform_nick_used(client->fd);
   }
 
 }
@@ -312,7 +335,7 @@ void set_nickname(struct Client *client, char *alias, struct Client *cli_base){
 void inform_nick_used(int sockfd) {
   char buffer[BUFFER_CLI_SIZE];
   memset(buffer, 0, BUFFER_CLI_SIZE);
-  strcpy(buffer, "[SERVER] Nickname already used by another client\n");
+  strcpy(buffer, "[SERVER] Nickname already used by another client or incorrect nickname\n");
 
   do_send(sockfd, buffer, BUFFER_CLI_SIZE);
 }
@@ -407,26 +430,28 @@ void inform_alias_incorrect(int sockfd) {
   do_send(sockfd, buffer, BUFFER_CLI_SIZE);
 }
 
-void broadcast(int sockfd,struct Client *cli_base, char*buffer){
+void broadcast(int sockfd,struct Client *cli_base, char *msg){
   // Client buffer is higher than server buffer
+  char* alias_sender = get_alias_from_fd(sockfd, cli_base);
   char buffer_cli[BUFFER_CLI_SIZE];
-  const char space[2] = "-";
-  char *token;
   memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
   // Knowing who sent the message and what type the message is (broadcast)
-  strcat(buffer_cli, "[");
-  strcat(buffer_cli, "YourNickname");
-  strcat(buffer_cli, "] [BRAODCAST] :");
+  //strcat(buffer_cli, "[");
+  //strcat(buffer_cli, "YourNickname");
+  //strcat(buffer_cli, "] [BRAODCAST] :");
+  snprintf(buffer_cli, BUFFER_CLI_SIZE, "[%s] msg all -> %s", alias_sender, msg);
+
 
   /* get the first token to take of */
-  token = strtok(buffer, space); // token = "/msgall" here
+  //token = strtok(buffer, space); // token = "/msgall" here
 
   /* walk through other tokens */
+  /*
   while( token != NULL ){
     token = strtok(NULL, space);
     strcat(buffer_cli,token);
-  }
+  }*/
 
   for (int i=0;i<MAX_NO_CLI;i++){
     if(cli_base[i].fd != EMPTY_SLOT && cli_base[i].fd != sockfd ){
@@ -535,6 +560,14 @@ void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *to
     return;
   }
 
+  //CREATE CHANNEL MSG
+  else if(strcmp(token, CREATE_CHANNEL_MSG) == 0) {
+    strncat(token_cmd, token, CMD_SIZE);
+    strncat(token_arg, strtok(NULL, space), ARG_SIZE);
+
+    return;
+  }
+
 }
 
 char *get_alias_from_fd(int fd, struct Client *cli_base) {       //For production purpose and better design, hash tables can be implemented to have fd as index
@@ -554,3 +587,75 @@ int get_fd_from_alias(char *alias, struct Client *cli_base) {
   }
   return EMPTY_SLOT;
 }
+
+void create_channel(int cli_fd, char *token_arg, struct Channel *channel_base) {
+
+  //security
+  if (presence_channel(token_arg, channel_base) || strlen(token_arg) == 0) {
+    inform_channel_used(cli_fd);
+  }
+
+  else {
+    printf("Create channel : %s\n", token_arg);
+    for (int i = 0; i < MAX_NO_CHANNEL; i++) {
+      if (strlen(channel_base[i].name) == 0) {
+        strncpy(channel_base[i].name, token_arg, MAX_NAME_CHANNEL_SIZE);
+        //insert_client_channel(cli_fd, i);   //pointer to the
+        inform_channel_created(cli_fd);
+        break;
+      }
+    }
+  }
+
+}
+
+void inform_channel_used(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strcpy(buffer, "[SERVER] Channel already used or incorrect name\n");
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void inform_channel_created(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] Channel created\n", BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+int presence_channel(char *channel_name, struct Channel *channel_base) {
+  for(int i=0; i < MAX_NO_CHANNEL; i++) {
+    if(strcmp(channel_name, channel_base[i].name) == 0) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+void join_channel(int cli_fd, char *token_arg, struct Channel *channel_base) {
+
+  //security
+  if (presence_channel(token_arg, channel_base) || strlen(token_arg) == 0) {
+    inform_channel_unknown(cli_fd);
+  }
+  else if {
+
+  }
+
+  else {
+    printf("%d joins channel : %s\n", cli_fd, token_arg);
+    for (int i = 0; i < MAX_NO_CHANNEL; i++) {
+      if (strlen(channel_base[i].name) == 0) {
+        strncpy(channel_base[i].name, token_arg, MAX_NAME_CHANNEL_SIZE);
+        //insert_client_channel(cli_fd, i);   //pointer to the
+        inform_channel_created(cli_fd);
+        break;
+      }
+    }
+  }
+
+}
+
+//void insert_client_channel(cli_fd, i);   //pointer to the

@@ -20,6 +20,8 @@
 #define WHOIS_MSG "/whois"
 #define BROADCAST_MSG "/msgall"
 #define UNICAST_MSG "/msg"
+#define CREATE_CHANNEL_MSG "/create"
+
 #define CLOSE_ABRUPT -1
 
 void error(const char *msg);
