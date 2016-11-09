@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
           if ( handle(&cli_base[i], cli_base, channel_base) == CLOSE_COMMUNICATION) {
-            // TODO same reset for channel base, cf. abruptly
+            // TODO same reset for channel base, cf. abruptly, do it
             reset_client_slot(cli_base+i);
           }
         }
