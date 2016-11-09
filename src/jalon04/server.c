@@ -96,6 +96,7 @@ int main(int argc, char* argv[]) {
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
           if ( handle(&cli_base[i], cli_base, channel_base) == CLOSE_COMMUNICATION) {
+            // TODO same reset for channel base, cf. abruptly
             reset_client_slot(cli_base+i);
           }
         }
@@ -108,6 +109,7 @@ int main(int argc, char* argv[]) {
 
 int handle(struct Client *client, struct Client *cli_base, struct Channel *channel_base) {
   int sockfd = client->fd;
+  int cli_channel = client->id_channel;       //channel suscribed by the client to verify later on
   char alias[ALIAS_SIZE];
   strncpy(alias,client->alias,ALIAS_SIZE);
   char buffer_serv[BUFFER_SERV_SIZE];
@@ -219,6 +221,13 @@ int handle(struct Client *client, struct Client *cli_base, struct Channel *chann
     printf("Create channel msg received\n");
     create_channel(sockfd, token_arg, channel_base);
     //unicast(sockfd, cli_base, token_data, token_arg);
+    return KEEP_COMMUNICATION;
+  }
+
+  // Join channel
+  else if(strcmp(token_cmd, JOIN_MSG) == 0) {
+    printf("Join channel msg received\n");
+    join_channel(sockfd, cli_channel, token_arg, cli_base, channel_base);
     return KEEP_COMMUNICATION;
   }
 
@@ -568,6 +577,14 @@ void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *to
     return;
   }
 
+  //JOIN CHANNEL
+  else if(strcmp(token, JOIN_MSG) == 0) {
+    strncat(token_cmd, token, CMD_SIZE);
+    strncat(token_arg, strtok(NULL, space), ARG_SIZE);
+
+    return;
+  }
+
 }
 
 char *get_alias_from_fd(int fd, struct Client *cli_base) {       //For production purpose and better design, hash tables can be implemented to have fd as index
@@ -637,12 +654,15 @@ int presence_channel(char *channel_name, struct Channel *channel_base) {
   return 0;
 }
 
-void join_channel(int cli_fd, char *token_arg, struct Client *cli_base, struct Channel *channel_base) {
+void join_channel(int cli_fd, int cli_channel, char *token_arg, struct Client *cli_base, struct Channel *channel_base) {
 
   int id_channel = get_id_channel_from_name(token_arg, channel_base);
 
   //security
-  if (presence_channel(token_arg, channel_base)) {
+  if (cli_channel != NO_CHANNEL_YET) {
+    inform_inside_channel(cli_fd);
+  }
+  else if (!presence_channel(token_arg, channel_base)) {
     inform_channel_incorrect(cli_fd);
   }
   else if(count_users_channel(id_channel, channel_base) > MAX_USERS_CHANNEL) {
@@ -716,6 +736,14 @@ void inform_channel_joined(int sockfd) {
   char buffer[BUFFER_CLI_SIZE];
   memset(buffer, 0, BUFFER_CLI_SIZE);
   strncpy(buffer, "[SERVER] Channel joined\n", BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void inform_inside_channel(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] You are already in a channel, please leave first with /quit\n", BUFFER_CLI_SIZE);
 
   do_send(sockfd, buffer, BUFFER_CLI_SIZE);
 }

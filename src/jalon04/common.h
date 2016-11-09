@@ -21,6 +21,7 @@
 #define BROADCAST_MSG "/msgall"
 #define UNICAST_MSG "/msg"
 #define CREATE_CHANNEL_MSG "/create"
+#define JOIN_MSG "/join"
 
 #define CLOSE_ABRUPT -1
 

@@ -57,7 +57,7 @@ int presence_channel(char *channel_name, struct Channel *channel_base);
 void inform_channel_used(int sockfd);
 void inform_channel_created(int sockfd);
 
-void join_channel(int cli_fd, char *token_arg, struct Client *cli_base, struct Channel *channel_base);
+void join_channel(int cli_fd, int cli_channel, char *token_arg, struct Client *cli_base, struct Channel *channel_base);
 void insert_client_channel(int cli_fd, int id_channel, struct Channel *channel_base);
 void update_client_channel(int id_channel, int cli_fd, struct Client *cli_base);
 int get_id_channel_from_name(char *name, struct Channel *channel_base);
@@ -67,5 +67,6 @@ void inform_channel_max(int sockfd);
 void inform_channel_joined(int sockfd);
 int count_channels(struct Channel *channel_base);
 int count_users_channel(int id_channel, struct Channel *channel_base);
+void inform_inside_channel(int sockfd);
 
 #endif
