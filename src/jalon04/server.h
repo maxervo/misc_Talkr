@@ -20,7 +20,7 @@ struct Client {
   char con_time[CON_TIME_SIZE];
   char ip[IP_SIZE];  //Format with inet_aton(), inet_ntoa()
   int port;
-  int id_channel;
+  int id_channel; // considered the index of channel_base afterwards
 };
 
 struct Channel {
@@ -56,5 +56,12 @@ void create_channel(int sockfd, char *token_arg, struct Channel *channel_base);
 int presence_channel(char *channel_name, struct Channel *channel_base);
 void inform_channel_used(int sockfd);
 void inform_channel_created(int sockfd);
+
+void quit_channel(int sockfd,struct Channel *channel_base,struct Client* client);
+void inform_no_channel_yet(int sockfd);
+int count_cli_channel(int id_cli_channel,struct Channel channel_base);
+void inform_quit_success(int sockfd);
+void remove_cli_from_channel(struct Channel * channel, int sockfd);
+void destroy_channel(struct Channel *channel);
 
 #endif

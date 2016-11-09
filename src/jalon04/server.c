@@ -659,3 +659,56 @@ void join_channel(int cli_fd, char *token_arg, struct Channel *channel_base) {
 }
 
 //void insert_client_channel(cli_fd, i);   //pointer to the
+
+void quit_channel(int sockfd,struct Channel *channel_base,struct Client* client) {
+  int id_cli_channel=client.id_channel;
+
+  // security
+  if (id_cli_channe==-1)){
+    inform_no_channel_yet(int sockfd);
+  }
+
+
+  else if( count_cli_channel(channel_base+id_cli_channel)==1){ 
+    destroy_channel(channel_base+id_cli_channel);  // destroy the channel if it's the last user
+    client.id_channel=-1;
+    inform_quit_success(sockfd);
+    }
+  else{
+    remove_cli_from_channel(channel_base+id_cli_channel,sockfd); // Quit the channel
+    client.id_channel=-1;
+    inform_quit_success(sockfd);
+
+  }
+}
+
+void inform_no_channel_yet(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] You are not actually in a channel\n",BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void inform_quit_success(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] You have quit the channel with success\n",BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void destroy_channel(struct Channel *channel) {
+    channel.name[0]='\0';
+    for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+      channel.users_fd[i]=EMPTY_SLOT;
+    }
+}
+
+void remove_cli_from_channel(struct Channel * channel, int sockfd){
+  for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+    if (channel.users_fd[i]==sockfd){
+      channel.users_fd[i]=EMPTY_SLOT;
+    }
+  }
+}
