@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
       for (i = 0; i < MAX_NO_CLI; i++) {
         if (FD_ISSET(cli_base[i].fd, &read_fds_copy)) {
           if ( handle(&cli_base[i], cli_base, channel_base) == CLOSE_COMMUNICATION) {
-            // TODO same reset for channel base, cf. abruptly, do it
+            clean_channel(&cli_base[i], channel_base);
             reset_client_slot(cli_base+i);
           }
         }
@@ -131,20 +131,8 @@ int handle(struct Client *client, struct Client *cli_base, struct Channel *chann
   }
   else { // extract the first word of the msg receive
 
-    printf("BEFORE\n");
     parse_request(buffer_serv, token_cmd, token_arg, token_data);
-    printf("AFTER %s and %s and %s\n", token_cmd, token_arg, token_data);
-    /*
-    strncpy(buffer_serv_copy, buffer_serv, BUFFER_SERV_SIZE);
-    token_cmd = strtok(buffer_serv_copy, space);   //can be /quit /nick /whois /who
-    token_arg = strtok(NULL, space);*/
 
-    /*
-    // Walk through the leftovers
-    while( token != NULL ){
-      token = strtok(NULL, space);
-      strcat(buffer_cli,token);
-    }*/
   }
 
   //Quit
@@ -231,12 +219,19 @@ int handle(struct Client *client, struct Client *cli_base, struct Channel *chann
     return KEEP_COMMUNICATION;
   }
 
-  //Simple msg : TODO for chatrooms
+  // Quit channel
+  else if(strcmp(token_cmd, QUIT_CHANNEL_MSG) == 0) {
+    printf("Quit channel msg received\n");
+    quit_channel(sockfd, channel_base, client); //int sockfd,struct Channel *channel_base,struct Client* client
+    return KEEP_COMMUNICATION;
+  }
+  //Multicast
   else {
-    strncpy(buffer_cli, buffer_serv, BUFFER_SERV_SIZE);
-    printf("Sending to client with fd [%i]: %s", sockfd, buffer_cli);
-    do_send(sockfd, buffer_cli, BUFFER_CLI_SIZE);
-    printf("Echo sent\n\n");
+    //strncpy(buffer_cli, buffer_serv, BUFFER_SERV_SIZE);
+    printf("Multicast: sending to everyone in the channel\n");
+    //do_send(sockfd, buffer_cli, BUFFER_CLI_SIZE);
+    multicast(sockfd, alias, token_data, cli_channel, channel_base);
+    printf("Done\n\n");
 
     return KEEP_COMMUNICATION;
   }
@@ -548,6 +543,7 @@ void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *to
     while( token != NULL ){
       token = strtok(NULL, space);
       if (token != NULL) {strncat(token_data, token, BUFFER_CLI_SIZE);}
+      strncat(token_data, " ", BUFFER_CLI_SIZE);
     }
 
     return;
@@ -559,11 +555,10 @@ void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *to
     strncat(token_arg, strtok(NULL, space), ARG_SIZE);
 
     // Walk through the data
-    while( token != NULL ){
-      printf("before token\n");
+    while( token != NULL ) {
       token = strtok(NULL, space);
-      printf("It's %s\n", token);
       if (token != NULL) {strncat(token_data, token, BUFFER_CLI_SIZE);}
+      strncat(token_data, " ", BUFFER_CLI_SIZE);
     }
 
     return;
@@ -577,12 +572,32 @@ void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *to
     return;
   }
 
+  // QUIT CHANNEL MSG
+  else if(strcmp(token, QUIT_CHANNEL_MSG) == 0) {
+    strncat(token_cmd, token, CMD_SIZE);
+
+    return;
+  }
+
   //JOIN CHANNEL
   else if(strcmp(token, JOIN_MSG) == 0) {
     strncat(token_cmd, token, CMD_SIZE);
     strncat(token_arg, strtok(NULL, space), ARG_SIZE);
 
     return;
+  }
+
+  //MULTICAST
+  else {
+    if(token != NULL) {strncat(token_data, token, BUFFER_CLI_SIZE);}
+    strncat(token_data, " ", BUFFER_CLI_SIZE);
+
+    // Walk through the data
+    while( token != NULL ){
+      token = strtok(NULL, space);
+      if (token != NULL) {strncat(token_data, token, BUFFER_CLI_SIZE);}
+      strncat(token_data, " ", BUFFER_CLI_SIZE);
+    }
   }
 
 }
@@ -677,6 +692,28 @@ void join_channel(int cli_fd, int cli_channel, char *token_arg, struct Client *c
 
 }
 
+void quit_channel(int sockfd,struct Channel *channel_base,struct Client* client) {
+  int id_cli_channel=client->id_channel;
+
+  // security
+  if (id_cli_channel == -1) {
+    inform_no_channel_yet(sockfd);
+  }
+
+
+  else if( count_users_channel(id_cli_channel, channel_base) == 1){
+    destroy_channel(channel_base+id_cli_channel);  // destroy the channel if it's the last user
+    client->id_channel=-1;
+    inform_quit_success(sockfd);
+    }
+  else{
+    remove_cli_from_channel(channel_base+id_cli_channel,sockfd); // Quit the channel
+    client->id_channel=-1;
+    inform_quit_success(sockfd);
+
+  }
+}
+
 void insert_client_channel(int cli_fd, int id_channel, struct Channel *channel_base) {
 
   int *users_fd = channel_base[id_channel].users_fd;    //considering the users database of the channel to modify
@@ -698,6 +735,37 @@ void update_client_channel(int id_channel, int cli_fd, struct Client *cli_base) 
   }
 }
 
+void inform_no_channel_yet(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] You are not actually in a channel\n",BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void inform_quit_success(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] You have quit the channel with success\n",BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void destroy_channel(struct Channel *channel) {
+    channel->name[0]='\0';
+    for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+      channel->users_fd[i]=EMPTY_SLOT;
+    }
+}
+
+void remove_cli_from_channel(struct Channel * channel, int sockfd) {
+  for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+    if (channel->users_fd[i]==sockfd) {
+      channel->users_fd[i]=EMPTY_SLOT;
+    }
+  }
+}
+
 int get_id_channel_from_name(char *name, struct Channel *channel_base) {
   for (int i = 0; i < MAX_NO_CLI; i++) {
     if ((strcmp(channel_base[i].name, name) == 0)) {
@@ -706,6 +774,24 @@ int get_id_channel_from_name(char *name, struct Channel *channel_base) {
   }
 
   return NO_CHANNEL_YET;
+}
+
+void multicast(int sockfd,char *alias_sender, char*msg, int id_channel, struct Channel *channel_base){
+  char buffer_cli[BUFFER_CLI_SIZE];
+  memset(buffer_cli, 0, BUFFER_CLI_SIZE);
+
+  // security
+  if (id_channel==NO_CHANNEL_YET){
+    inform_join_channel(sockfd);
+  }
+  else{
+    snprintf(buffer_cli, BUFFER_CLI_SIZE, "[%s] -> %s", alias_sender, msg);
+    for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+      if(channel_base[id_channel].users_fd[i] != sockfd && channel_base[id_channel].users_fd[i] != EMPTY_SLOT){
+        do_send(channel_base[id_channel].users_fd[i], buffer_cli, BUFFER_CLI_SIZE);
+      }
+    }
+  }
 }
 
 void inform_channel_crowded(int sockfd) {
@@ -763,5 +849,30 @@ int count_users_channel(int id_channel, struct Channel *channel_base) {
     if (channel_base[id_channel].users_fd[i] != EMPTY_SLOT) {
       no_users++;
     }
+  }
+}
+
+void inform_join_channel(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] You need to join a channel with the /join or create your own with /create <ChannelName>\n",BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void clean_channel(struct Client* client, struct Channel *channel_base) {
+  int sockfd = client->fd;
+  int id_cli_channel=client->id_channel;
+
+  // security for when client hasn't suscribed to a channel
+  if (id_cli_channel == NO_CHANNEL_YET) {
+    printf("OK client wasn't in a channel\n");
+  }
+
+  else if( count_users_channel(id_cli_channel, channel_base) == 1){
+    destroy_channel(channel_base+id_cli_channel);  // destroy the channel if it's the last user
+    }
+  else{
+    remove_cli_from_channel(channel_base+id_cli_channel, sockfd); // Quit the channel
   }
 }
