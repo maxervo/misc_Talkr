@@ -67,4 +67,6 @@ void destroy_channel(struct Channel *channel);
 void multicast(int sockfd,char *alias_sender, char*msg, int id_channel, struct Channel *channel_base);
 void inform_join_channel(int sockfd);
 
+int count_users_channel(int id_channel, struct Channel *channel_base);
+
 #endif

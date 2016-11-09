@@ -634,49 +634,25 @@ int presence_channel(char *channel_name, struct Channel *channel_base) {
   return 0;
 }
 
-void join_channel(int cli_fd, char *token_arg, struct Channel *channel_base) {
-
-  //security
-  if (presence_channel(token_arg, channel_base) || strlen(token_arg) == 0) {
-    inform_channel_unknown(cli_fd);
-  }
-  else if {
-
-  }
-
-  else {
-    printf("%d joins channel : %s\n", cli_fd, token_arg);
-    for (int i = 0; i < MAX_NO_CHANNEL; i++) {
-      if (strlen(channel_base[i].name) == 0) {
-        strncpy(channel_base[i].name, token_arg, MAX_NAME_CHANNEL_SIZE);
-        //insert_client_channel(cli_fd, i);   //pointer to the
-        inform_channel_created(cli_fd);
-        break;
-      }
-    }
-  }
-
-}
-
 //void insert_client_channel(cli_fd, i);   //pointer to the
 
 void quit_channel(int sockfd,struct Channel *channel_base,struct Client* client) {
-  int id_cli_channel=client.id_channel;
+  int id_cli_channel=client->id_channel;
 
   // security
-  if (id_cli_channe==-1)){
-    inform_no_channel_yet(int sockfd);
+  if (id_cli_channel == -1) {
+    inform_no_channel_yet(sockfd);
   }
 
 
-  else if( count_cli_channel(channel_base+id_cli_channel)==1){
+  else if( count_users_channel(id_cli_channel, channel_base) == 1){
     destroy_channel(channel_base+id_cli_channel);  // destroy the channel if it's the last user
-    client.id_channel=-1;
+    client->id_channel=-1;
     inform_quit_success(sockfd);
     }
   else{
     remove_cli_from_channel(channel_base+id_cli_channel,sockfd); // Quit the channel
-    client.id_channel=-1;
+    client->id_channel=-1;
     inform_quit_success(sockfd);
 
   }
@@ -699,16 +675,16 @@ void inform_quit_success(int sockfd) {
 }
 
 void destroy_channel(struct Channel *channel) {
-    channel.name[0]='\0';
+    channel->name[0]='\0';
     for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
-      channel.users_fd[i]=EMPTY_SLOT;
+      channel->users_fd[i]=EMPTY_SLOT;
     }
 }
 
 void remove_cli_from_channel(struct Channel * channel, int sockfd){
   for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
-    if (channel.users_fd[i]==sockfd){
-      channel.users_fd[i]=EMPTY_SLOT;
+    if (channel->users_fd[i]==sockfd){
+      channel->users_fd[i]=EMPTY_SLOT;
     }
   }
 }
@@ -724,8 +700,8 @@ void multicast(int sockfd,char *alias_sender, char*msg, int id_channel, struct C
   else{
     snprintf(buffer_cli, BUFFER_CLI_SIZE, "[%s] -> %s", alias_sender, msg);
     for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
-      if(channel_base[id_channel].users_fd != sockfd && channel_base[id_channel].users_fd != EMPTY_SLOT){
-        do_send(channel_base[id_channel].users_fd, buffer_cli, BUFFER_CLI_SIZE);
+      if(channel_base[id_channel].users_fd[i] != sockfd && channel_base[id_channel].users_fd[i] != EMPTY_SLOT){
+        do_send(channel_base[id_channel].users_fd[i], buffer_cli, BUFFER_CLI_SIZE);
       }
     }
   }
@@ -737,4 +713,8 @@ void inform_join_channel(int sockfd){
   strncpy(buffer, "[SERVER] You need to join a channel with the /join or creat your own with /creat <ChannelName>\n",BUFFER_CLI_SIZE);
 
   do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+int count_users_channel(int id_channel, struct Channel *channel_base) {
+  return 1;
 }
