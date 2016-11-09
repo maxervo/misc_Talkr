@@ -114,8 +114,6 @@ int handle(struct Client *client, struct Client *cli_base, struct Channel *chann
   strncpy(alias,client->alias,ALIAS_SIZE);
   char buffer_serv[BUFFER_SERV_SIZE];
   memset(buffer_serv, 0, BUFFER_SERV_SIZE);
-  //char buffer_serv_copy[BUFFER_SERV_SIZE];            // to extract token, we work only on a copy because strtok modifies the input
-  //memset(buffer_serv_copy, 0, BUFFER_SERV_SIZE);
   char buffer_cli[BUFFER_CLI_SIZE];
   memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
@@ -144,7 +142,6 @@ int handle(struct Client *client, struct Client *cli_base, struct Channel *chann
 
   //Set nickname
   else if(strcmp(token_cmd,NICK_MSG) == 0) {
-    //token_arg = strtok(NULL, space);
 
     printf("Nick msg received \n");
 
@@ -208,7 +205,6 @@ int handle(struct Client *client, struct Client *cli_base, struct Channel *chann
   else if(strcmp(token_cmd, CREATE_CHANNEL_MSG) == 0) {
     printf("Create channel msg received\n");
     create_channel(sockfd, token_arg, channel_base);
-    //unicast(sockfd, cli_base, token_data, token_arg);
     return KEEP_COMMUNICATION;
   }
 
@@ -222,14 +218,12 @@ int handle(struct Client *client, struct Client *cli_base, struct Channel *chann
   // Quit channel
   else if(strcmp(token_cmd, QUIT_CHANNEL_MSG) == 0) {
     printf("Quit channel msg received\n");
-    quit_channel(sockfd, channel_base, client); //int sockfd,struct Channel *channel_base,struct Client* client
+    quit_channel(sockfd, channel_base, client);
     return KEEP_COMMUNICATION;
   }
   //Multicast
   else {
-    //strncpy(buffer_cli, buffer_serv, BUFFER_SERV_SIZE);
     printf("Multicast: sending to everyone in the channel\n");
-    //do_send(sockfd, buffer_cli, BUFFER_CLI_SIZE);
     multicast(sockfd, alias, token_data, cli_channel, channel_base);
     printf("Done\n\n");
 
@@ -440,22 +434,7 @@ void broadcast(int sockfd,struct Client *cli_base, char *msg){
   char buffer_cli[BUFFER_CLI_SIZE];
   memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
-  // Knowing who sent the message and what type the message is (broadcast)
-  //strcat(buffer_cli, "[");
-  //strcat(buffer_cli, "YourNickname");
-  //strcat(buffer_cli, "] [BRAODCAST] :");
   snprintf(buffer_cli, BUFFER_CLI_SIZE, "[%s] msg all -> %s", alias_sender, msg);
-
-
-  /* get the first token to take of */
-  //token = strtok(buffer, space); // token = "/msgall" here
-
-  /* walk through other tokens */
-  /*
-  while( token != NULL ){
-    token = strtok(NULL, space);
-    strcat(buffer_cli,token);
-  }*/
 
   for (int i=0;i<MAX_NO_CLI;i++){
     if(cli_base[i].fd != EMPTY_SLOT && cli_base[i].fd != sockfd ){
@@ -480,38 +459,6 @@ void unicast(int sockfd, struct Client *cli_base, char *msg, char *alias_receive
     inform_alias_incorrect(sockfd);
   }
 
-
-  //const char space[2] = "-";
-  //char *token;
-  //memset(buffer_cli, 0, BUFFER_CLI_SIZE);
-
-  /*
-  // this part allow to know who send the message and what type the message is (broadcast)
-  strcat(buffer_cli, "[");
-  strcat(buffer_cli, "YourNickname");
-  strcat(buffer_cli, "] [UNICAST] :");
-
-  /* get the 2 first token to take of */
-  //token = strtok(buffer, space); // token = "/msgall" here
-  //token = strtok(NULL, space); // token = nickname
-
-  /* walk through other tokens */
-  /*
-  while( token != NULL ){
-    token = strtok(NULL, space);
-    strcat(buffer_cli,token);
-  }*/
-
-  /*
-  printf("L'alias demandé est : %s\n", alias);
-  for (i=0;i<MAX_NO_CLI;i++){
-    if((strcmp(alias,cli_base[i].alias)==0) && cli_base[i].fd!=sockfd ){
-      printf("L'alias trouvé est : %s\n", cli_base[i].alias);
-      printf("L'alias trouvé est : %i\n", cli_base[i].fd);
-      do_send(cli_base[i].fd, buffer_cli, BUFFER_CLI_SIZE);
-      break;
-    }
-  }*/
 }
 
 void parse_request(char *buffer_serv, char *token_cmd, char *token_arg, char *token_data) {
@@ -635,7 +582,6 @@ void create_channel(int cli_fd, char *token_arg, struct Channel *channel_base) {
     for (int i = 0; i < MAX_NO_CHANNEL; i++) {
       if (strlen(channel_base[i].name) == 0) {
         strncpy(channel_base[i].name, token_arg, MAX_NAME_CHANNEL_SIZE);
-        //insert_client_channel(cli_fd, i);   //pointer to the
         inform_channel_created(cli_fd);
         break;
       }
