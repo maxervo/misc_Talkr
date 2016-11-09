@@ -669,7 +669,7 @@ void quit_channel(int sockfd,struct Channel *channel_base,struct Client* client)
   }
 
 
-  else if( count_cli_channel(channel_base+id_cli_channel)==1){ 
+  else if( count_cli_channel(channel_base+id_cli_channel)==1){
     destroy_channel(channel_base+id_cli_channel);  // destroy the channel if it's the last user
     client.id_channel=-1;
     inform_quit_success(sockfd);
@@ -711,4 +711,30 @@ void remove_cli_from_channel(struct Channel * channel, int sockfd){
       channel.users_fd[i]=EMPTY_SLOT;
     }
   }
+}
+
+void multicast(int sockfd,char *alias_sender, char*msg, int id_channel, struct Channel *channel_base){
+  char buffer_cli[BUFFER_CLI_SIZE];
+  memset(buffer_cli, 0, BUFFER_CLI_SIZE);
+
+  // security
+  if (id_channel==NO_CHANNEL_YET){
+    inform_join_channel(sockfd);
+  }
+  else{
+    snprintf(buffer_cli, BUFFER_CLI_SIZE, "[%s] -> %s", alias_sender, msg);
+    for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+      if(channel_base[id_channel].users_fd != sockfd && channel_base[id_channel].users_fd != EMPTY_SLOT){
+        do_send(channel_base[id_channel].users_fd, buffer_cli, BUFFER_CLI_SIZE);
+      }
+    }
+  }
+}
+
+void inform_join_channel(int sockfd){
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] You need to join a channel with the /join or creat your own with /creat <ChannelName>\n",BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
 }

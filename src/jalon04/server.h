@@ -64,4 +64,7 @@ void inform_quit_success(int sockfd);
 void remove_cli_from_channel(struct Channel * channel, int sockfd);
 void destroy_channel(struct Channel *channel);
 
+void multicast(int sockfd,char *alias_sender, char*msg, int id_channel, struct Channel *channel_base);
+void inform_join_channel(int sockfd);
+
 #endif
