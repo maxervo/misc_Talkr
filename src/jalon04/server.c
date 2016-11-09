@@ -594,6 +594,9 @@ void create_channel(int cli_fd, char *token_arg, struct Channel *channel_base) {
   if (presence_channel(token_arg, channel_base) || strlen(token_arg) == 0) {
     inform_channel_used(cli_fd);
   }
+  else if(count_channels(channel_base) > MAX_NO_CHANNEL) {
+    inform_channel_max(cli_fd);
+  }
 
   else {
     printf("Create channel : %s\n", token_arg);
@@ -634,28 +637,103 @@ int presence_channel(char *channel_name, struct Channel *channel_base) {
   return 0;
 }
 
-void join_channel(int cli_fd, char *token_arg, struct Channel *channel_base) {
+void join_channel(int cli_fd, char *token_arg, struct Client *cli_base, struct Channel *channel_base) {
+
+  int id_channel = get_id_channel_from_name(token_arg, channel_base);
 
   //security
-  if (presence_channel(token_arg, channel_base) || strlen(token_arg) == 0) {
-    inform_channel_unknown(cli_fd);
+  if (presence_channel(token_arg, channel_base)) {
+    inform_channel_incorrect(cli_fd);
   }
-  else if {
-
+  else if(count_users_channel(id_channel, channel_base) > MAX_USERS_CHANNEL) {
+    inform_channel_crowded(cli_fd);
   }
 
   else {
     printf("%d joins channel : %s\n", cli_fd, token_arg);
-    for (int i = 0; i < MAX_NO_CHANNEL; i++) {
-      if (strlen(channel_base[i].name) == 0) {
-        strncpy(channel_base[i].name, token_arg, MAX_NAME_CHANNEL_SIZE);
-        //insert_client_channel(cli_fd, i);   //pointer to the
-        inform_channel_created(cli_fd);
-        break;
-      }
-    }
+    insert_client_channel(cli_fd, id_channel, channel_base);
+    update_client_channel(id_channel, cli_fd, cli_base);      //updating the status of the user : associated channel
   }
 
 }
 
-//void insert_client_channel(cli_fd, i);   //pointer to the
+void insert_client_channel(int cli_fd, int id_channel, struct Channel *channel_base) {
+
+  int *users_fd = channel_base[id_channel].users_fd;    //considering the users database of the channel to modify
+  for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+    if (users_fd[i] == EMPTY_SLOT) {
+      users_fd[i] = cli_fd;
+      inform_channel_joined(cli_fd);
+      break;
+    }
+  }
+}
+
+void update_client_channel(int id_channel, int cli_fd, struct Client *cli_base) {
+  for (int i = 0; i < MAX_NO_CLI; i++) {
+    if (cli_base[i].fd == cli_fd) {
+      cli_base[i].id_channel = id_channel;
+      break;
+    }
+  }
+}
+
+int get_id_channel_from_name(char *name, struct Channel *channel_base) {
+  for (int i = 0; i < MAX_NO_CLI; i++) {
+    if ((strcmp(channel_base[i].name, name) == 0)) {
+      return i;     //our design : id channel is considered as index of channel database
+    }
+  }
+
+  return NO_CHANNEL_YET;
+}
+
+void inform_channel_crowded(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] Channel crowded, please try again later\n", BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void inform_channel_incorrect(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] Channel incorrect, not present or spelled wrong\n", BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void inform_channel_max(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] Too many channels already created, please come back later\n", BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+void inform_channel_joined(int sockfd) {
+  char buffer[BUFFER_CLI_SIZE];
+  memset(buffer, 0, BUFFER_CLI_SIZE);
+  strncpy(buffer, "[SERVER] Channel joined\n", BUFFER_CLI_SIZE);
+
+  do_send(sockfd, buffer, BUFFER_CLI_SIZE);
+}
+
+int count_channels(struct Channel *channel_base) {
+  int no_channels = 0;
+  for (int i = 0; i < MAX_NO_CHANNEL; i++) {
+    if (strlen(channel_base[i].name) > 0) {
+      no_channels++;
+    }
+  }
+}
+
+int count_users_channel(int id_channel, struct Channel *channel_base) {
+  int no_users = 0;
+  for (int i = 0; i < MAX_USERS_CHANNEL; i++) {
+    if (channel_base[id_channel].users_fd[i] != EMPTY_SLOT) {
+      no_users++;
+    }
+  }
+}
