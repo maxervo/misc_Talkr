@@ -5,6 +5,9 @@
 #include <netdb.h>
 #include <netinet/in.h> // struct sockaddr_in
 #include <sys/select.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 #include "common.h"
 #include "client.h"
@@ -29,6 +32,7 @@ int main(int argc, char const *argv[]) {
   struct timeval tv;
   tv.tv_sec = 0;
   tv.tv_usec = 0;
+  off_t offset=0;
 
 
 
@@ -65,16 +69,7 @@ int main(int argc, char const *argv[]) {
   printf("Write '/quit' in order to close this session\n\n\n");
 
 
-/*   CLIENT- CLIENT */
-  //Preparing client
-  sockfd_upload = create_socket();
-  init_uploader_address(&uploader_addr, DOWNLOAD_PORT);
-  do_bind(sockfd_upload, &uploader_addr);
 
-  //Listen
-  if(listen( sockfd_upload, 1) < 0) {
-    error("Error - listen");
-  }
 
 
   //Main Client Loop
@@ -108,14 +103,43 @@ int main(int argc, char const *argv[]) {
       // wait for Acceptance
       if (strncmp(buffer_receive, WAIT_ACCEPT_MSG,sizeof(WAIT_ACCEPT_MSG)-1) == 0) {
         download.cli_state=WAIT_ACCEPT;
+        //Preparing client
+        sockfd_upload = create_socket();
+        init_uploader_address(&uploader_addr, DOWNLOAD_PORT);
+        do_bind(sockfd_upload, &uploader_addr);
+
+        //Listen
+        if(listen(sockfd_upload, 1) < 0) {
+          error("Error - listen");
+        }
+        printf("Listening ...\n");
       }
       // init upload
       if (strncmp(buffer_receive, UPLOAD_FLAG,sizeof(UPLOAD_FLAG)-1) == 0) {
         download.cli_state=UPLOAD_IN_PROGRESS;
+        printf("Init upload in progress ok\n");
+
       }
       // init Download
-      if (strncmp(buffer_receive, UPLOAD_FLAG,sizeof(DOWNLOAD_FLAG)-1) == 0) {
+      if (strncmp(buffer_receive, DOWNLOAD_FLAG,sizeof(DOWNLOAD_FLAG)-1) == 0) {
+        char ip_uploader[IP_SIZE] = {'\0'};
+        struct hostent* cli_uploader;
+        struct sockaddr_in uploader_addr;
         download.cli_state=DOWNLOAD_IN_PROGRESS;
+
+        //Preparing
+        sockfd_download = create_socket();
+        extract_ip(buffer_receive, ip_uploader);
+        printf("extract is %s\n", ip_uploader);
+        cli_uploader = get_server(ip_uploader);
+        init_serv_address(cli_uploader, &uploader_addr, DOWNLOAD_PORT);
+
+        //Connect to server
+        if ( connect(sockfd_download, (struct sockaddr *) &uploader_addr, sizeof(uploader_addr))<0 ) {
+          error("Error - connection");
+        }
+
+        printf("Connected.\n");
       }
     }
 
@@ -143,15 +167,59 @@ int main(int argc, char const *argv[]) {
     }
 
     // download
-    if(FD_ISSET(sockfd_upload, &read_fds_copy) || download.cli_state==UPLOAD_IN_PROGRESS) {
-        printf("je recois bien \n");
+    if(FD_ISSET(sockfd_download, &read_fds_copy) && download.cli_state == DOWNLOAD_IN_PROGRESS) {
+      printf("Downloader is in the if\n");
+      memset(buffer_receive, 0, BUFFER_CLI_SIZE);
+      int filefd=open("downloadfile", O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+      if (do_recv(sockfd_download, buffer_receive, BUFFER_CLI_SIZE)==0){
+          close(filefd);
+          close(sockfd_download);
+          download.cli_state=NO_ACTIVITY;
+      }
+      write(filefd,buffer_receive,BUFFER_CLI_SIZE);
+      close(filefd);
+
     }
+
+    if(download.cli_state == UPLOAD_IN_PROGRESS) {
+      printf("I'm in\n");
+      memset(buffer_receive, 0, BUFFER_CLI_SIZE);
+      int filefd=open(download.file, O_RDONLY | O_CREAT, S_IRWXU);
+      printf("After open\n");
+
+      if( (pread(filefd,buffer_receive,BUFFER_CLI_SIZE,offset) == 0)) {
+        printf("In if\n");
+        close(filefd);
+        close(sockfd_upload);
+        download.cli_state=NO_ACTIVITY;
+      }
+      printf("%s sur fd=%i\n", buffer_receive,sockfd_upload);
+
+      //if (send(sockfd_upload, buffer_receive, BUFFER_CLI_SIZE, 0) == -1) {
+      //  printf("Error send");
+      //}
+      do_send(sockfd_upload, buffer_receive, BUFFER_CLI_SIZE);
+      printf("%s\n","SEND ok" );
+      close(filefd);
+      offset+=BUFFER_CLI_SIZE;
+      printf("I'm out\n");
+    }
+
+
 
 
   }// end while
   return EXIT_SUCCESS;  //optional line, indeed client quits the program with "/quit" or ctrl+c
 }
 
+
+
+
+/*
+
+  Functions
+
+*/
 
 
 struct hostent* get_server(const char *host_target) {
@@ -213,6 +281,7 @@ void update_download(char *buffer_send,struct Download *download) {
       strcpy(download->alias, token_nickname);
     }
     if (token_file != NULL) {
+      token_file[strlen(token_file)-1] = '\0';
       strcpy(download->file, token_file);
     }
   }
@@ -229,4 +298,13 @@ void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr) {
   if ( bind(sockfd, (struct sockaddr *) serv_addr_ptr, sizeof(struct sockaddr_in))<0 ) {  //cast generic struct
     error("Error - bind");
   }
+}
+
+void extract_ip(char *buffer_receive, char *ip_uploader) {
+  const char space[2] = " ";
+  char* token = strtok(buffer_receive, space);   //can be /quit /nick /whois /who  /msgall /msg
+  token = strtok(NULL, space);
+  token = strtok(NULL, space);
+
+  strncat(ip_uploader, token, IP_SIZE);
 }

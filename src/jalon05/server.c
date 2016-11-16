@@ -107,6 +107,16 @@ int main(int argc, char* argv[]) {
   return EXIT_SUCCESS;
 }
 
+
+/*
+
+Functions
+
+*/
+
+
+
+
 int handle(struct Client *client, struct Client *cli_base, struct Channel *channel_base) {
   int sockfd = client->fd;
   int cli_channel = client->id_channel;       //channel suscribed by the client to verify later on
@@ -699,8 +709,9 @@ void quit_channel(int sockfd,struct Channel *channel_base,struct Client* client)
     inform_no_channel_yet(sockfd);
   }
 
-
-  else if( count_users_channel(id_cli_channel, channel_base) == 1){
+    printf("count is %d\n", count_users_channel(id_cli_channel, channel_base));
+  if( count_users_channel(id_cli_channel, channel_base) == 1){
+    printf("d channel launched\n");
     destroy_channel(channel_base+id_cli_channel);  // destroy the channel if it's the last user
     client->id_channel=-1;
     inform_quit_success(sockfd);
@@ -840,6 +851,8 @@ int count_channels(struct Channel *channel_base) {
       no_channels++;
     }
   }
+
+  return no_channels;
 }
 
 int count_users_channel(int id_channel, struct Channel *channel_base) {
@@ -849,6 +862,8 @@ int count_users_channel(int id_channel, struct Channel *channel_base) {
       no_users++;
     }
   }
+
+  return no_users;
 }
 
 void inform_join_channel(int sockfd) {
@@ -867,6 +882,7 @@ void clean_channel(struct Client* client, struct Channel *channel_base) {
   if (id_cli_channel == NO_CHANNEL_YET) {
     printf("OK client wasn't in a channel\n");
   }
+
 
   else if( count_users_channel(id_cli_channel, channel_base) == 1){
     destroy_channel(channel_base+id_cli_channel);  // destroy the channel if it's the last user
@@ -889,7 +905,7 @@ void upload(int sockfd_sender,char* alias_sender, char* alias_receiver, char* fi
     memset(buffer_cli, 0, BUFFER_CLI_SIZE);
 
     int sockfd_receiver=get_fd_from_alias(alias_receiver, cli_base);
-    snprintf(buffer_cli, BUFFER_CLI_SIZE, "{DOWNLOAD} %s wants you to accept the transfer of the file named \"%s\".\n You can accept with the command /accept %s \n",alias_sender,filename,alias_sender);
+    snprintf(buffer_cli, BUFFER_CLI_SIZE, "{INFODOWNLOAD} %s wants you to accept the transfer of the file named \"%s\".\n You can accept with the command /accept %s \n",alias_sender,filename,alias_sender);
     do_send(sockfd_receiver, buffer_cli, BUFFER_CLI_SIZE);
 
     memset(buffer_cli, 0, BUFFER_CLI_SIZE);
@@ -929,7 +945,7 @@ void accept_download(int sockfd_sender, char * alias_sender, char* alias_receive
     }
     sockfd_receiver=get_fd_from_alias(alias_receiver, cli_base);
     ip_sender=get_ip_from_fd(sockfd_sender, cli_base);
-    snprintf(buffer_cli, BUFFER_CLI_SIZE, "%s %s %s", UPLOAD_FLAG,alias_sender,ip_sender);
+    snprintf(buffer_cli, BUFFER_CLI_SIZE, "%s %s %s ", UPLOAD_FLAG,alias_sender,ip_sender);
     do_send(sockfd_receiver, buffer_cli, BUFFER_CLI_SIZE);
 
     memset(buffer_cli, 0, BUFFER_CLI_SIZE);
@@ -938,7 +954,7 @@ void accept_download(int sockfd_sender, char * alias_sender, char* alias_receive
 
     memset(buffer_cli, 0, BUFFER_CLI_SIZE);
     ip_receiver=get_ip_from_fd(sockfd_receiver, cli_base);
-    snprintf(buffer_cli, BUFFER_CLI_SIZE, "%s %s %s", DOWNLOAD_FLAG,alias_receiver,ip_receiver);
+    snprintf(buffer_cli, BUFFER_CLI_SIZE, "%s %s %s ", DOWNLOAD_FLAG,alias_receiver,ip_receiver);
     do_send(sockfd_sender, buffer_cli, BUFFER_CLI_SIZE);
 
   }

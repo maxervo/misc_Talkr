@@ -631,6 +631,76 @@
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
 					</target>
+					<target name="[exe] RE216_JALON05_SERVER" path="jalon05" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-j4</buildArguments>
+						<buildTarget>RE216_JALON05_SERVER</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name="[exe] RE216_JALON05_SERVER/fast" path="jalon05" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-j4</buildArguments>
+						<buildTarget>RE216_JALON05_SERVER/fast</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name="Build" path="[Targets]/[exe] RE216_JALON05_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-C "/home/rstoke/earth/workspace/school/project network_programming/Talkr/build" -j4</buildArguments>
+						<buildTarget>RE216_JALON05_SERVER</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name="Clean" path="[Targets]/[exe] RE216_JALON05_SERVER" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/cmake</buildCommand>
+						<buildArguments>-E chdir "/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON05_SERVER.dir/cmake_clean.cmake"</buildArguments>
+						<buildTarget></buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name="[exe] RE216_JALON05_CLIENT" path="jalon05" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-j4</buildArguments>
+						<buildTarget>RE216_JALON05_CLIENT</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name="[exe] RE216_JALON05_CLIENT/fast" path="jalon05" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-j4</buildArguments>
+						<buildTarget>RE216_JALON05_CLIENT/fast</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name="Build" path="[Targets]/[exe] RE216_JALON05_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-C "/home/rstoke/earth/workspace/school/project network_programming/Talkr/build" -j4</buildArguments>
+						<buildTarget>RE216_JALON05_CLIENT</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name="Clean" path="[Targets]/[exe] RE216_JALON05_CLIENT" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/cmake</buildCommand>
+						<buildArguments>-E chdir "/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05" "/usr/bin/cmake" -P "CMakeFiles/RE216_JALON05_CLIENT.dir/cmake_clean.cmake"</buildArguments>
+						<buildTarget></buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name=": all" path="jalon05" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-j4</buildArguments>
+						<buildTarget>all</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
+					<target name=": clean" path="jalon05" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>/usr/bin/make</buildCommand>
+						<buildArguments>-j4</buildArguments>
+						<buildTarget>clean</buildTarget>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+					</target>
 				</buildTargets>
 			</storageModule>
 			<storageModule moduleId="scannerConfiguration">

@@ -16,3 +16,7 @@
 /home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon04/CMakeFiles/RE216_JALON04_SERVER.dir
 /home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon04/CMakeFiles/rebuild_cache.dir
 /home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon04/CMakeFiles/RE216_JALON04_CLIENT.dir
+/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05/CMakeFiles/edit_cache.dir
+/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05/CMakeFiles/rebuild_cache.dir
+/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05/CMakeFiles/RE216_JALON05_SERVER.dir
+/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05/CMakeFiles/RE216_JALON05_CLIENT.dir

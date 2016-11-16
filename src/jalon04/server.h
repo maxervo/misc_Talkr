@@ -10,8 +10,8 @@
 #define EMPTY_SLOT 0
 
 #define MAX_NAME_CHANNEL_SIZE 25
-#define MAX_USERS_CHANNEL 3   //TODO change for final submit
-#define MAX_NO_CHANNEL 3
+#define MAX_USERS_CHANNEL 50
+#define MAX_NO_CHANNEL 200
 #define NO_CHANNEL_YET -1
 
 struct Client {

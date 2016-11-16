@@ -206,10 +206,22 @@ RE216_JALON02_BINARY_DIR:STATIC=/home/rstoke/earth/workspace/school/project netw
 RE216_JALON02_SOURCE_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon02
 
 //Value Computed by CMake
-RE216_JALON03_BINARY_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon04
+RE216_JALON03_BINARY_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon03
 
 //Value Computed by CMake
-RE216_JALON03_SOURCE_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon04
+RE216_JALON03_SOURCE_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon03
+
+//Value Computed by CMake
+RE216_JALON04_BINARY_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon04
+
+//Value Computed by CMake
+RE216_JALON04_SOURCE_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon04
+
+//Value Computed by CMake
+RE216_JALON05_BINARY_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05
+
+//Value Computed by CMake
+RE216_JALON05_SOURCE_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon05
 
 //Value Computed by CMake
 RE216_SOURCE_DIR:STATIC=/home/rstoke/earth/workspace/school/project network_programming/Talkr/src
@@ -317,7 +329,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

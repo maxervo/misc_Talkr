@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
-project(RE216_JALON03)
+project(RE216_JALON04)
 
 #add here source files you need to compile and link to the client app
 SET(SRC_CLIENT

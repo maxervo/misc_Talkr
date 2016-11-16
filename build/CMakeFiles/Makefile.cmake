@@ -17,6 +17,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon02/CMakeLists.txt"
   "/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon03/CMakeLists.txt"
   "/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon04/CMakeLists.txt"
+  "/home/rstoke/earth/workspace/school/project network_programming/Talkr/src/jalon05/CMakeLists.txt"
   "/usr/share/cmake-3.6/Modules/CMakeCCompiler.cmake.in"
   "/usr/share/cmake-3.6/Modules/CMakeCCompilerABI.c"
   "/usr/share/cmake-3.6/Modules/CMakeCInformation.cmake"
@@ -118,6 +119,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "jalon02/CMakeFiles/CMakeDirectoryInformation.cmake"
   "jalon03/CMakeFiles/CMakeDirectoryInformation.cmake"
   "jalon04/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "jalon05/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -130,4 +132,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "jalon03/CMakeFiles/RE216_JALON03_CLIENT.dir/DependInfo.cmake"
   "jalon04/CMakeFiles/RE216_JALON04_SERVER.dir/DependInfo.cmake"
   "jalon04/CMakeFiles/RE216_JALON04_CLIENT.dir/DependInfo.cmake"
+  "jalon05/CMakeFiles/RE216_JALON05_SERVER.dir/DependInfo.cmake"
+  "jalon05/CMakeFiles/RE216_JALON05_CLIENT.dir/DependInfo.cmake"
   )

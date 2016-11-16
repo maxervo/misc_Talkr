@@ -214,6 +214,32 @@ RE216_JALON04_CLIENT/fast:
 	$(MAKE) -f jalon04/CMakeFiles/RE216_JALON04_CLIENT.dir/build.make jalon04/CMakeFiles/RE216_JALON04_CLIENT.dir/build
 .PHONY : RE216_JALON04_CLIENT/fast
 
+#=============================================================================
+# Target rules for targets named RE216_JALON05_SERVER
+
+# Build rule for target.
+RE216_JALON05_SERVER: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RE216_JALON05_SERVER
+.PHONY : RE216_JALON05_SERVER
+
+# fast build rule for target.
+RE216_JALON05_SERVER/fast:
+	$(MAKE) -f jalon05/CMakeFiles/RE216_JALON05_SERVER.dir/build.make jalon05/CMakeFiles/RE216_JALON05_SERVER.dir/build
+.PHONY : RE216_JALON05_SERVER/fast
+
+#=============================================================================
+# Target rules for targets named RE216_JALON05_CLIENT
+
+# Build rule for target.
+RE216_JALON05_CLIENT: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RE216_JALON05_CLIENT
+.PHONY : RE216_JALON05_CLIENT
+
+# fast build rule for target.
+RE216_JALON05_CLIENT/fast:
+	$(MAKE) -f jalon05/CMakeFiles/RE216_JALON05_CLIENT.dir/build.make jalon05/CMakeFiles/RE216_JALON05_CLIENT.dir/build
+.PHONY : RE216_JALON05_CLIENT/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -230,6 +256,8 @@ help:
 	@echo "... RE216_JALON03_CLIENT"
 	@echo "... RE216_JALON04_SERVER"
 	@echo "... RE216_JALON04_CLIENT"
+	@echo "... RE216_JALON05_SERVER"
+	@echo "... RE216_JALON05_CLIENT"
 .PHONY : help
 
 

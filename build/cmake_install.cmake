@@ -38,6 +38,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon02/cmake_install.cmake")
   include("/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon03/cmake_install.cmake")
   include("/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon04/cmake_install.cmake")
+  include("/home/rstoke/earth/workspace/school/project network_programming/Talkr/build/jalon05/cmake_install.cmake")
 
 endif()
 

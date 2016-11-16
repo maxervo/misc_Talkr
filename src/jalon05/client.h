@@ -29,6 +29,6 @@ void update_download(char *buffer_send,struct Download *download);
 void init_uploader_address(struct sockaddr_in *serv_addr_ptr, int port_no);
 void do_bind(int sockfd, struct sockaddr_in *serv_addr_ptr); // TODO put in common.c
 
-
+void extract_ip(char *buffer_receive, char *ip_uploader);
 
 #endif
